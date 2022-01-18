@@ -2,7 +2,7 @@
 name: Dev Log Template
 about: 프로젝트 진행 상황을 꾸준하게 기록하는 이슈 템플릿입니다.
 title: "[✍️ Dev Log] 이름 / 2021-00-00"
-labels: ''
+labels: dev-log
 assignees: ''
 
 ---
