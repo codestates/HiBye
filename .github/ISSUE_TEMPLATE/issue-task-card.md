@@ -1,11 +1,12 @@
 ---
 name: Issue Task Card
 about: Issue Task Card
-title: "[client || server || sr] feature/function task "
+title: "[client || server] feature/function task"
 labels: ''
 assignees: ''
-
 ---
+
+> [client || server] feature/function task
 
 ### ISSUE
 - Group:  `client`, `server`, `sr`
@@ -18,7 +19,6 @@ assignees: ''
 3. [ ] Job3
 
 ### Estimated time
-> Pick one
 ### `0.5h`
 ### `1h`
 ### `1.5h`
