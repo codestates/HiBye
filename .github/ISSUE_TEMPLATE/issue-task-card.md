@@ -10,9 +10,12 @@ assignees: ''
 > [client || server] feature/function task  
 > ### Labels
 > - Estimated time: `E: 1h`
-> - Group : `client`, `server`
-> - Sprint: `Sprint__NUMBER__`
-> - Urgency: `High`, `Middle`, `Low`
+> - Group : `client`, `server`  
+
+> - 프로젝트와 스프린트를 설정해주세요
+
+> ### Additional options
+> - Urgency: `High`, `Middle`, `Low`  
 
 ### ISSUE
 - Group:  `client`, `server`, `sr`
