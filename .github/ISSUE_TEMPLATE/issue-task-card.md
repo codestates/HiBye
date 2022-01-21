@@ -30,8 +30,6 @@ assignees: ''
 ### Estimated time
 - `0.5h`
 - `1h`
-- `1.5h`
 - `2h`
-- `2.5h`
 - `3h`
 - `3h + 𝜶`
