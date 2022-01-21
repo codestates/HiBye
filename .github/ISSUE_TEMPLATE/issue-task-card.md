@@ -7,7 +7,12 @@ assignees: ''
 
 ---
 
-> [client || server] feature/function task
+> [client || server] feature/function task  
+> ### Labels
+> - Estimated time: `E: 1h`
+> - Group : `client`, `server`
+> - Sprint: `Sprint__NUMBER__`
+> - Urgency: `High`, `Middle`, `Low`
 
 ### ISSUE
 - Group:  `client`, `server`, `sr`
@@ -20,15 +25,10 @@ assignees: ''
 3. [ ] Job3
 
 ### Estimated time
-### `0.5h`
-### `1h`
-### `1.5h`
-### `2h`
-### `2.5h`
-### `3h`
-
-### Labels
-- Estimated time: `E: 1h`
-- Group : `client`, `server`
-- Sprint: `Sprint__NUMBER__`
-- Urgency: `High`, `Middle`, `Low`
+- `0.5h`
+- `1h`
+- `1.5h`
+- `2h`
+- `2.5h`
+- `3h`
+- `3h + 𝜶`
