@@ -14,5 +14,13 @@
 }
 
 .button--pink {
-  @apply border h-8 leading-7 rounded-3xl text-center px-6 text-sm border-hibye-80 text-hibye-80 hover:bg-hibye-80 hover:text-hibye-10 duration-300;
+  @apply border h-8 leading-7 rounded-3xl text-center px-6 text-sm border-hibye-80 text-hibye-80 hover:bg-hibye-80 hover:text-hibye-10 duration-300 cursor-pointer;
+}
+
+.button--pink--save {
+  @apply text-center px-6 text-lg  h-10 w-80 leading-10 rounded-lg bg-hibye-80 border text-hibye-10 hover:bg-hibye-100 hover:text-hibye-20 duration-300 cursor-pointer;
+}
+
+textarea {
+  resize: none;
 }
