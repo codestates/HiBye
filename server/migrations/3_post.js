@@ -17,7 +17,7 @@ module.exports = {
       shared_at: {
         type: Sequelize.DATE
       },
-      author_id: {
+      user_id: {
         allowNull: false,
         type: Sequelize.INTEGER,
         onDelete: 'cascade',
