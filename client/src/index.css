@@ -6,3 +6,9 @@
 .App {
   font-family: "Roboto", sans-serif;
 }
+
+.inner {
+  width: 1100px;
+  margin: 0 auto;
+  position: relative;
+}
