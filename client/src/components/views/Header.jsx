@@ -3,6 +3,8 @@ import Navbar from "./Navbar";
 import { GiHamburgerMenu } from "react-icons/gi";
 import { useRef } from "react";
 import useDetectOutsideClick from "../../utils/useDetectOutsideClick";
+import { useCallback } from "react";
+import PrivateBoardCreateModal from "./PrivateBoardCreateModal";
 
 export default function Header() {
   // Todo: Sign in 기능과 커플 매칭 구현 후 변수에 할당
@@ -11,14 +13,16 @@ export default function Header() {
 
   const navRef = useRef(null);
   const [isActive, setIsActive] = useDetectOutsideClick(navRef, false);
-  const click = () => setIsActive(!isActive);
+  const click = useCallback(() => {
+    setIsActive(!isActive);
+  }, [isActive, setIsActive]);
 
   return (
     <div className="bg-hibye-10 h-16">
       <div className="inner p-4">
         <GiHamburgerMenu className={`text-3xl absolute left-4 cursor-pointer ${isActive ? "text-hibye-60" : "text-hibye-80"}`} onClick={click} />
         <div ref={navRef} className="absolute top-16">
-          {isActive ? <Navbar /> : null}
+          {isActive ? <Navbar click={click} /> : null}
         </div>
         <Link to="/" className="text-hibye-80 text-3xl font-bold absolute left-1/2 -translate-x-2/4">
           HiBye
@@ -46,6 +50,7 @@ export default function Header() {
           )}
         </div>
       </div>
+      <PrivateBoardCreateModal />
     </div>
   );
 }

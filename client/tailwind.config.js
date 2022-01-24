@@ -11,6 +11,7 @@ module.exports = {
           40: "#FFAFD2", // hibye_rose
           20: "#FFEBF0", // hibye_blush
           10: "#FBFBFB", // hibye_snow
+          input: "#EFEFEF",
         },
       },
     },
