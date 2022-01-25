@@ -1,8 +1,10 @@
+import TopBtn from "../components/Button/TopBtn";
 import BoardCards from "../components/views/BoardCards";
 
 function Main() {
   return (
     <div className="bg-hibye-10">
+      <TopBtn />
       {/* banner */}
       <section className="w-screen h-fit bg-gradient-to-r from-hibye-60 to-hibye-80 pt-12">
         <div className="inner text-7xl uppercase text-hibye-20 font-light">
