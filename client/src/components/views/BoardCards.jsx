@@ -1,3 +1,5 @@
+import LeftBtn from "../Button/LeftBtn";
+import RightBtn from "../Button/RightBtn";
 import BoardCard from "./BoardCard";
 
 export default function BoardCards() {
@@ -9,6 +11,8 @@ export default function BoardCards() {
   return (
     <div className="flex justify-center items-center w-screen overflow-hidden">
       <div className="flex w-fit p-10">
+        <LeftBtn />
+        <RightBtn />
         {boards.map((board) => {
           return <BoardCard board={board} />;
         })}
