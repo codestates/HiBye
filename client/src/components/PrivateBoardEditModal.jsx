@@ -76,7 +76,7 @@ export default function PrivateBoardEditModal({ board_id, prev_name, prev_desc }
   };
 
   const nameStyle = "text-hibye-60 font-bold mb-2 text-lg";
-  const inputStyle = "w-80 mb-4 p-2 text-hibye-100 bg-hibye-input rounded-lg";
+  const inputStyle = "w-80 mb-4 p-2 text-hibye-100 bg-gray-10 rounded-lg";
 
   return (
     <>
