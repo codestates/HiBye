@@ -14,6 +14,9 @@ module.exports = {
           input: "#EFEFEF",
         },
       },
+      backgroundImages: {
+        banner: "url(https://unsplash.com/photos/BcVvVvqiCGA)",
+      },
     },
   },
   plugins: [],
