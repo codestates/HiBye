@@ -5,7 +5,6 @@ import publicBoards from "./publicBoards";
 import privateBoards from "./privateBoards";
 import user from "./user";
 import posts from "./posts";
-import chatEditModal from "./chatEditModal";
 
 const rootReducer = combineReducers({
   privateBoardCreateModal,
@@ -14,7 +13,6 @@ const rootReducer = combineReducers({
   privateBoards,
   user,
   posts,
-  chatEditModal,
 });
 
 export default rootReducer;

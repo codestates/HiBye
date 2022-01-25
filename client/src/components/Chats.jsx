@@ -1,8 +1,6 @@
 import Spinner from "./Spinner";
 import EditBtn from "./Button/EditBtn";
 import CancelBtn from "./Button/CancelBtn";
-import { useDispatch } from "react-redux";
-// import { openModal } from "../redux/modules/chatEditModal";
 import axios from "axios";
 import swal from "sweetalert2";
 import { useState, useRef } from "react";
