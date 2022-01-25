@@ -8,7 +8,7 @@ import getByteLength from "../../utils/getByteLength";
 import axios from "axios";
 import swal from "sweetalert2";
 
-export default function PrivateBoardCreateModal() {
+export default function PrivateBoardCreateModal({ couple_id }) {
   const isOpen = useSelector((state) => state.privateBoardCreateModal.isOpen);
   const dispatch = useDispatch();
   const close = () => {
@@ -48,10 +48,8 @@ export default function PrivateBoardCreateModal() {
       return;
     }
 
-    //! 임시 커플 아이디
-    const coupleId = 1;
     axios
-      .post(`${process.env.REACT_APP_API_URL}/board/${coupleId}`, {
+      .post(`${process.env.REACT_APP_API_URL}/board/${couple_id}`, {
         name: name,
         category: refCategory.current.value,
         theme: refTheme.current.value,
