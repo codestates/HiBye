@@ -11,11 +11,15 @@ module.exports = {
           40: "#FFAFD2", // hibye_rose
           20: "#FFEBF0", // hibye_blush
           10: "#FBFBFB", // hibye_snow
-          input: "#EFEFEF",
         },
-      },
-      backgroundImages: {
-        banner: "url(https://unsplash.com/photos/BcVvVvqiCGA)",
+        gray: {
+          100: "#333333",
+          80: "#666666",
+          60: "#999999",
+          40: "#CCCCCC",
+          20: "#E0E0E0",
+          10: "#EFEFEF",
+        },
       },
     },
   },
