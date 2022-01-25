@@ -12,8 +12,6 @@ import PrivateBoardEditModal from "../components/PrivateBoardEditModal";
 import getByteLength from "../utils/getByteLength";
 import swal from "sweetalert2";
 import axios from "axios";
-import ChatEditModal from "../components/ChatEditModal";
-
 export default function ChatBoard() {
   const { boardId } = useParams();
   const dispatch = useDispatch();
@@ -100,7 +98,6 @@ export default function ChatBoard() {
       ) : (
         <div className="bg-hibye-10">
           <PrivateBoardEditModal board_id={board.id} prev_name={board.name} prev_desc={board.desc} />
-          <ChatEditModal />
           <div className="inner pt-4">
             <div className="mt-10 p-5">
               <div className="mb-4 flex">

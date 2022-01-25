@@ -151,7 +151,7 @@ export default function Chats({ posts, user_id }) {
                     value={editContents}
                     ref={refInput}
                   />
-                  {valid.isValid ? null : <div className="text-hibye-80 text-sm text-center mb-2">Invalid chat. Please check again.</div>}
+                  {valid.isValid ? null : <div className="text-hibye-80 text-sm text-center mb-2 mt-2">Invalid chat. Please check again.</div>}
                 </>
               ) : (
                 <div className="text-xm text-gray-80">{post.contents}</div>
