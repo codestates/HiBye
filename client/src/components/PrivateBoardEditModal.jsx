@@ -57,7 +57,6 @@ export default function PrivateBoardEditModal({ board_id, prev_name, prev_desc }
         swal
           .fire({
             title: "Board modification success",
-            text: `"${name}" has been modified`,
             icon: "success",
             confirmButtonColor: "#D70569",
           })
