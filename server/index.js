@@ -7,6 +7,8 @@ const helmet = require("helmet");
 const cookieParser = require('cookie-parser');
 const cors = require("cors");
 const indexRouter = require("./routes/index");
+const boardRouter = require("./routes/board");
+const boardsRouter = require("./routes/boards");
 
 app.use(helmet());
 app.use(express.json());
@@ -26,7 +28,9 @@ models.sequelize
     console.log(err);
   });
 
-app.use("/", indexRouter)
+app.use("/", indexRouter);
+app.use("/board", boardRouter);
+app.use("/boards", boardsRouter);
 
 // app.get("/", (req, res) => {
 //   res.send("Hello World!");
