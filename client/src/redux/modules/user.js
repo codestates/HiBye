@@ -3,11 +3,17 @@ import { createSlice } from "@reduxjs/toolkit";
 const userSlice = createSlice({
   name: "user",
   initialState: {
-    id: null,
-    username: null,
+    // id: null,
+    // username: null,
+    // email: null,
+    // couple_id: null,
+    // is_matching: false,
+    // d_day: null,
+    id: 1,
+    username: "yuchan",
     email: null,
-    couple_id: null,
-    is_matching: false,
+    couple_id: 1,
+    is_matching: true,
     d_day: null,
   },
   reducers: {
