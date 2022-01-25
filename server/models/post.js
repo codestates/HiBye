@@ -32,7 +32,10 @@ module.exports = (sequelize, DataTypes) => {
     }
   }
   Post.init({
-    title: DataTypes.STRING,
+    title: {
+      type: DataTypes.STRING,
+      allowNull: true
+    },
     contents: DataTypes.STRING,
     shared_at: {
       type: DataTypes.DATE,

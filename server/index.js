@@ -11,6 +11,8 @@ const boardRouter = require("./routes/board");
 const boardsRouter = require("./routes/boards");
 const postRouter = require("./routes/post");
 const postsRouter = require("./routes/posts");
+const commentRouter = require("./routes/comment")
+const commentsRouter = require("./routes/comments")
 
 app.use(helmet());
 app.use(express.json());
@@ -18,7 +20,9 @@ app.use(express.static("public"));
 app.use(express.urlencoded({ extended: true }));
 app.use(cookieParser());
 app.use(compression());
-app.use(cors());
+app.use(cors({
+  credentials: true
+}));
 
 models.sequelize
   .sync()
@@ -35,6 +39,8 @@ app.use("/board", boardRouter);
 app.use("/boards", boardsRouter);
 app.use("/post", postRouter);
 app.use("/posts", postsRouter);
+app.use("/comment", commentRouter);
+app.use("/comments", commentsRouter);
 
 // app.get("/", (req, res) => {
 //   res.send("Hello World!");

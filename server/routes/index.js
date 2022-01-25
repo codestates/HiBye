@@ -31,7 +31,6 @@ router.get("/auth", (req, res) => {
       })
     }
   }
-
 })
 
 router.post("/signin", async function (req, res) {

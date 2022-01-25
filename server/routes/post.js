@@ -37,7 +37,7 @@ router.post("/:user_id/:board_id", (req, res) => {
 
   const { title, contents } = req.body;
 
-  if (!userId || !boardId || !title || !contents) {
+  if (!userId || !boardId || !contents) {
     res.status(400).json({message: "정보가 충분히 전달되지 않았습니다."})
   } else {
     models.Post.create({
