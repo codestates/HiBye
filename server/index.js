@@ -9,6 +9,8 @@ const cors = require("cors");
 const indexRouter = require("./routes/index");
 const boardRouter = require("./routes/board");
 const boardsRouter = require("./routes/boards");
+const postRouter = require("./routes/post");
+const postsRouter = require("./routes/posts");
 
 app.use(helmet());
 app.use(express.json());
@@ -31,6 +33,8 @@ models.sequelize
 app.use("/", indexRouter);
 app.use("/board", boardRouter);
 app.use("/boards", boardsRouter);
+app.use("/post", postRouter);
+app.use("/posts", postsRouter);
 
 // app.get("/", (req, res) => {
 //   res.send("Hello World!");

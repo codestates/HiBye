@@ -15,7 +15,8 @@ module.exports = {
         type: Sequelize.STRING
       },
       shared_at: {
-        type: Sequelize.DATE
+        type: Sequelize.DATE,
+        allowNull: true
       },
       user_id: {
         allowNull: false,
