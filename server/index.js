@@ -2,6 +2,19 @@ const express = require("express");
 const models = require("./models/index.js");
 const app = express();
 const port = 80;
+const compression = require("compression");
+const helmet = require("helmet");
+const cookieParser = require('cookie-parser');
+const cors = require("cors");
+const indexRouter = require("./routes/index");
+
+app.use(helmet());
+app.use(express.json());
+app.use(express.static("public"));
+app.use(express.urlencoded({ extended: true }));
+app.use(cookieParser());
+app.use(compression());
+app.use(cors());
 
 models.sequelize
   .sync()
@@ -13,9 +26,11 @@ models.sequelize
     console.log(err);
   });
 
-app.get("/", (req, res) => {
-  res.send("Hello World!");
-});
+app.use("/", indexRouter)
+
+// app.get("/", (req, res) => {
+//   res.send("Hello World!");
+// });
 
 app.use((req, res, next) => {
   res.status(404).send("Sorry cant find that!");
