@@ -18,7 +18,7 @@ export default function Footer() {
               Yuchan Jeong
             </a>
             <a href="https://github.com/jenjenhub" className="block">
-              GangHeena Kim
+              Gangheena Kim
             </a>
           </div>
           <div className="self-end text-2xl font-bold">HiBye</div>

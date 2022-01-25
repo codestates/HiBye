@@ -2,6 +2,7 @@ import { Link } from "react-router-dom";
 import { useDispatch } from "react-redux";
 import { openModal } from "../../redux/modules/privateBoardCreateModal";
 import PlusBtn from "../Button/PlusBtn";
+import Spinner from "../Spinner";
 
 export default function PrivateBoards({ boards, click, choseIcon }) {
   const dispatch = useDispatch();
@@ -19,11 +20,17 @@ export default function PrivateBoards({ boards, click, choseIcon }) {
           <PlusBtn />
         </div>
       </div>
-      {boards.map((board) => (
-        <Link to={`/${board.category}/${board.id}`} key={board.id} className="mb-4 truncate block hover:text-hibye-80 duration-300" onClick={click}>
-          {choseIcon(board.category)} {board.name}
-        </Link>
-      ))}
+      {boards.loading || boards.error ? (
+        <div className="flex justify-center">
+          <Spinner />
+        </div>
+      ) : (
+        boards.data.data.map((board) => (
+          <Link to={`/${board.category}/${board.id}`} key={board.id} className="mb-4 truncate block hover:text-hibye-80 duration-300" onClick={click}>
+            {choseIcon(board.category)} {board.name}
+          </Link>
+        ))
+      )}
     </>
   );
 }
