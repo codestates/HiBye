@@ -65,7 +65,7 @@ export default function Header() {
           )}
         </div>
       </div>
-      <PrivateBoardCreateModal />
+      <PrivateBoardCreateModal couple_id={couple_id} />
     </div>
   );
 }
