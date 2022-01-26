@@ -1,7 +1,7 @@
 'use strict';
 module.exports = {
   async up(queryInterface, Sequelize) {
-    await queryInterface.createTable('Boards', {
+    await queryInterface.createTable('boards', {
       id: {
         allowNull: false,
         autoIncrement: true,
@@ -25,21 +25,21 @@ module.exports = {
         type: Sequelize.INTEGER,
         onDelete: 'cascade',
         references: {
-          model: 'Couples',
+          model: 'couples',
           key: 'id'
         }
       },
-      createdAt: {
+      created_at: {
         allowNull: false,
         type: Sequelize.DATE
       },
-      updatedAt: {
+      updated_at: {
         allowNull: false,
         type: Sequelize.DATE
       }
     });
   },
   async down(queryInterface, Sequelize) {
-    await queryInterface.dropTable('Boards');
+    await queryInterface.dropTable('boards');
   }
 };

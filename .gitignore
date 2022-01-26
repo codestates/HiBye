@@ -3,3 +3,5 @@ node_modules
 .env
 *.pem
 client/build
+seeders
+package-lock.json

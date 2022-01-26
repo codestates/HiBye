@@ -19,12 +19,12 @@ export default function Header() {
   }, [isActive, setIsActive]);
 
   const publicBoards = useSelector((state) => state.publicBoards);
-  const privateBoards = useSelector((state) => state.privateBoards);
   const dispatch = useDispatch();
   useEffect(() => {
     dispatch(getPublicBoards());
   }, [dispatch]);
 
+  const privateBoards = useSelector((state) => state.privateBoards);
   useEffect(() => {
     if (couple_id && is_matching) {
       dispatch(getPrivateBoards(couple_id));
