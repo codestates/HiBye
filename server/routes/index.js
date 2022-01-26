@@ -14,90 +14,121 @@ router.get("/", async function (req, res) {
   res.send("Hello World!");
 })
 
-router.get("/auth", (req, res) => {
+// router.get("/auth", (req, res) => {
 
-  const token = req.cookies.jwt;
+//   const token = req.cookies.jwt;
   
-  if (!token) {
-    res.status(401).send({ data: null, message: "not authorized" });
-  } else {
-    const accessTokenData = jwt.verify(token, process.env.ACCESS_SECRET);
-    if (!accessTokenData) {
-      res.status(401).send({ data: null, message: "not authorized" });
-    } else {
-      res.status(200).json({
-        data: accessTokenData,
-        message: "Auth Ok"
-      })
-    }
-  }
-})
+//   if (!token) {
+//     res.status(401).send({ data: null, message: "not authorized" });
+//   } else {
+//     const accessTokenData = jwt.verify(token, process.env.ACCESS_SECRET);
+//     if (!accessTokenData) {
+//       res.status(401).send({ data: null, message: "not authorized" });
+//     } else {
+//       res.status(200).json({
+//         data: accessTokenData,
+//         message: "Auth Ok"
+//       })
+//     }
+//   }
+// })
 
 router.post("/signin", async function (req, res) {
   
   const { email, password } = req.body
-
+  console.log("이메일, 패스워드", email, password)
   if ( !email || !password ) {
     res.status(422).send("insufficient parameters supplied");
   } else {
-
     const userInfo = await models.User.findOne({
       where: {
         email: email,
-      }
+      },
     })
 
     if (!userInfo) {
       res.status(401).json({ message: "User does not exist!"})
     } else {
-      bcrypt.compare(password, userInfo.password, (err, result) => {
+      bcrypt.compare(password, userInfo.password, async (err, result) => {
         if (!result) {
           res.status(401).json({ message: "Password is incorrect"})
         } else {
+          console.log("userInfo.coupleId : ", userInfo.couple_id)
           if (!userInfo.couple_id) {
-
-            const accessToken = jwt.sign(
-              {
-                id: userInfo.id,
-                username: userInfo.username,
-                email: userInfo.email,
-                couple_id: null,
-                is_matching: null,
-                d_day: null
-              }, process.env.ACCESS_SECRET
-            );
-
-            res.cookie("jwt", accessToken, {
-              sameSite: "none",
-              httpOnly: true,
-              secure: true
-            }).status(200).json({message: "Login Success"})
-
+              res.status(200).json({
+                data: {
+                  id: userInfo.id,
+                  username: userInfo.username,
+                  email: userInfo.email,
+                  couple_id: null,
+                  is_matching: null,
+                  started_at: false
+                }, 
+                message:"로그인 성공"
+              })
           } else {
-            const coupleInfo = models.Couple.findOne({
+            const coupleInfo = await models.Couple.findOne({
               where: {
-                id: couple_id
+                id: userInfo.couple_id
               }
             })
-            const now = new Date();
-            const gap = now.getTime() - coupleInfo.started_at.getTime();
-            const day = Math.floor(gap / (1000 * 60 * 60 * 24)) * -1;
-            const accessToken = jwt.sign(
-              {
+            res.status(200).json({
+              data: {
                 id: userInfo.id,
                 username: userInfo.username,
                 email: userInfo.email,
                 couple_id: userInfo.couple_id,
                 is_matching: coupleInfo.is_matching,
-                d_day: day
-              }, process.env.ACCESS_SECRET
-            )
-            res.cookie("jwt", accessToken, {
-              sameSite: "none",
-              httpOnly: true,
-              secure: true
-            }).status(200).json({message: "Login Success"})
+                started_at: coupleInfo.started_at
+              }, 
+              message:"로그인 성공"
+            })
           }
+          
+          // if (!userInfo.couple_id) {
+
+          //   const accessToken = jwt.sign(
+          //     {
+          //       id: userInfo.id,
+          //       username: userInfo.username,
+          //       email: userInfo.email,
+          //       couple_id: null,
+          //       is_matching: null,
+          //       d_day: null
+          //     }, process.env.ACCESS_SECRET
+          //   );
+
+          //   res.cookie("jwt", accessToken, {
+          //     sameSite: "none",
+          //     httpOnly: true,
+          //     secure: true
+          //   }).status(200).json({message: "Login Success"})
+
+          // } else {
+          //   const coupleInfo = models.Couple.findOne({
+          //     where: {
+          //       id: couple_id
+          //     }
+          //   })
+          //   const now = new Date();
+          //   const gap = now.getTime() - coupleInfo.started_at.getTime();
+          //   const day = Math.floor(gap / (1000 * 60 * 60 * 24)) * -1;
+          //   const accessToken = jwt.sign(
+          //     {
+          //       id: userInfo.id,
+          //       username: userInfo.username,
+          //       email: userInfo.email,
+          //       couple_id: userInfo.couple_id,
+          //       is_matching: coupleInfo.is_matching,
+          //       d_day: day
+          //     }, process.env.ACCESS_SECRET
+          //   )
+          //   res.cookie("jwt", accessToken, {
+          //     sameSite: "none",
+          //     httpOnly: true,
+          //     secure: true
+          //   }).status(200).json({message: "Login Success"})
+          // }
           
         }
       })
