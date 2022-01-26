@@ -14,10 +14,13 @@ import swal from "sweetalert2";
 import axios from "axios";
 import CancelBtn from "../components/Button/CancelBtn";
 export default function ChatBoard() {
-  const { boardId } = useParams();
   const dispatch = useDispatch();
 
-  //* state.publicBoards.data.data: undefined -> [...]
+  // Params로 경로 확인
+  const { boardId } = useParams();
+
+  // Params와 저장되어 있는 보드 목록을 비교하여 옳은 접근인지 판단
+  // filter를 사용하기 위하여 무조건 배열 형태로 나오게 만듦
   const publicBoards = useSelector((state) => state.publicBoards);
   const privateBoards = useSelector((state) => state.privateBoards);
   const publicBoardsData = publicBoards.data.data || [];
@@ -27,25 +30,68 @@ export default function ChatBoard() {
   const board = publicBoard.length !== 0 ? publicBoard[0] : privateBoard[0];
   const isLoading = publicBoards.loading && privateBoards.loading;
 
-  const user_id = useSelector((state) => state.user.id);
+  // 시간 확인해서 로딩중에 에러로 안보내게 만듦
+  const [checkTwoSec, setCheckTwoSec] = useState(false);
+  useEffect(() => {
+    setTimeout(() => {
+      setCheckTwoSec(true);
+    }, 2000);
+  });
 
+  // 현재 보드에서 posts 불러옴
   const posts = useSelector((state) => state.posts);
   useEffect(() => {
     dispatch(getPosts(boardId));
   }, [dispatch, boardId]);
 
-  const [threeSec, setThreeSet] = useState(false);
-  useEffect(() => {
-    setTimeout(() => {
-      setThreeSet(true);
-    }, 2000);
-  });
-
+  // 보드 수정 모달 오픈
   const open = () => {
     dispatch(openModal());
   };
 
-  // POST: post
+  // 보드 삭제
+  const deleteBoard = () => {
+    swal
+      .fire({
+        title: "Are yue sure?",
+        showCancelButton: true,
+        icon: "warning",
+        confirmButtonColor: "#D70569",
+        confirmButtonText: "Yes, delete",
+        cancelButtonText: "Cancel",
+      })
+      .then((result) => {
+        if (result.isConfirmed) {
+          axios
+            .delete(`${process.env.REACT_APP_API_URL}/board/${board.id}`)
+            .then(() => {
+              swal
+                .fire({
+                  title: "Board delete success",
+                  text: `"${board.name}" has been deleted`,
+                  icon: "success",
+                  confirmButtonColor: "#D70569",
+                })
+                .then(() => {
+                  window.location.reload();
+                });
+            })
+            .catch((err) => {
+              swal.fire({
+                title: "Board delete failed",
+                text: `${err}`,
+                icon: "error",
+                confirmButtonColor: "#D70569",
+              });
+            });
+        }
+      });
+  };
+
+  // 유저 아이디 받아옴
+  const user_id = useSelector((state) => state.user.id);
+
+  // 게시물 작성
   const refContents = useRef(null);
   const [valid, setValid] = useState({ isValid: true });
   const [contents, setContents] = useState("");
@@ -54,6 +100,7 @@ export default function ChatBoard() {
   };
 
   const sendPost = () => {
+    // 유효성 검사
     const contentsByte = getByteLength(contents);
     if (contentsByte < 1 || contentsByte > 150 || /\s{2,}|^\s|\s$/g.test(contents)) {
       setValid((state) => ({ ...state, isValid: false }));
@@ -73,11 +120,15 @@ export default function ChatBoard() {
         refContents.current.value = "";
       })
       .then(() => {
-        swal.fire({
-          title: "Chat sending success",
-          icon: "success",
-          confirmButtonColor: "#D70569",
-        });
+        swal
+          .fire({
+            title: "Chat sending success",
+            icon: "success",
+            confirmButtonColor: "#D70569",
+          })
+          .then(() => {
+            window.location.reload();
+          });
       })
       .catch((err) =>
         swal.fire({
@@ -89,41 +140,6 @@ export default function ChatBoard() {
       );
   };
 
-  // Delete/board
-  const deleteBoard = () => {
-    swal
-      .fire({
-        title: "Are yue sure?",
-        showCancelButton: true,
-        icon: "warning",
-        confirmButtonColor: "#D70569",
-        confirmButtonText: "Yes, delete",
-        cancelButtonText: "Cancel",
-      })
-      .then((result) => {
-        if (result.isConfirmed) {
-          axios
-            .delete(`${process.env.REACT_APP_API_URL}/board/${board.id}`)
-            .then(() => {
-              swal.fire({
-                title: "Board delete success",
-                text: `"${board.name}" has been deleted`,
-                icon: "success",
-                confirmButtonColor: "#D70569",
-              });
-            })
-            .catch((err) => {
-              swal.fire({
-                title: "Board delete failed",
-                text: `${err}`,
-                icon: "error",
-                confirmButtonColor: "#D70569",
-              });
-            });
-        }
-      });
-  };
-
   return (
     <>
       {isLoading ? (
@@ -131,7 +147,7 @@ export default function ChatBoard() {
           <Spinner />
         </div>
       ) : !board ? (
-        threeSec ? (
+        checkTwoSec ? (
           <Error />
         ) : (
           <div className="w-screen h-screen flex justify-center items-center bg-hibye-10">
