@@ -216,7 +216,8 @@ router.post("/signup", async function (req, res) {
 })
 
 router.post("/signout", function (req, res) {
-  res.status(200).clearCookie('jwt').json({message: "Logout Success"})
+  // res.status(200).clearCookie('jwt').json({message: "Logout Success"})
+  res.status(200).json({message: "Logout Success"})
 })
 
 module.exports = router;
