@@ -1,8 +1,8 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 import axios from "axios";
 
-export const getPublicBoards = createAsyncThunk("boards/publicBoards", async () => {
-  const response = await axios.get(`${process.env.REACT_APP_API_URL}/board/public`);
+export const getPublicBoards = createAsyncThunk("publicBoards/getPublicBoards", async () => {
+  const response = await axios.get(`${process.env.REACT_APP_API_URL}/boards`);
   return response.data;
 });
 

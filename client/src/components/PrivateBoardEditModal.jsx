@@ -1,35 +1,34 @@
 import { useRef, useState } from "react";
 import { useSelector, useDispatch } from "react-redux";
-import { closeModal } from "../../redux/modules/privateBoardCreateModal";
-import CancelBtn from "../Button/CancelBtn";
-import category from "../../utils/category";
-import theme from "../../utils/theme";
-import getByteLength from "../../utils/getByteLength";
+import { closeModal } from "../redux/modules/privateBoardEditModal";
+import CancelBtn from "./Button/CancelBtn";
+import theme from "../utils/theme";
+import getByteLength from "../utils/getByteLength";
 import axios from "axios";
 import swal from "sweetalert2";
 
-export default function PrivateBoardCreateModal({ couple_id }) {
-  const isOpen = useSelector((state) => state.privateBoardCreateModal.isOpen);
+// Theme은 아직 하나라서 미구현
+export default function PrivateBoardEditModal({ board_id, prev_name, prev_desc }) {
+  const isOpen = useSelector((state) => state.privateBoardEditModal.isOpen);
   const dispatch = useDispatch();
   const close = () => {
-    setName("");
-    setDesc("");
+    setName(prev_name);
+    setDesc(prev_desc);
     setValid((state) => ({ ...state, isValid: true, reason: "" }));
     dispatch(closeModal());
   };
 
-  const [name, setName] = useState("");
+  const [name, setName] = useState(prev_name);
   const onChangeName = (e) => {
     setName(e.target.value);
   };
 
-  const [desc, setDesc] = useState("");
+  const [desc, setDesc] = useState(prev_desc);
   const onChangeDesc = (e) => {
     setDesc(e.target.value);
   };
 
   const refName = useRef(null);
-  const refCategory = useRef(null);
   const refTheme = useRef(null);
   const refDesc = useRef(null);
 
@@ -49,17 +48,15 @@ export default function PrivateBoardCreateModal({ couple_id }) {
     }
 
     axios
-      .post(`${process.env.REACT_APP_API_URL}/board/${couple_id}`, {
+      .patch(`${process.env.REACT_APP_API_URL}/board/${board_id}`, {
         name: name,
-        category: refCategory.current.value,
         theme: refTheme.current.value,
         description: desc,
       })
       .then(() => {
         swal
           .fire({
-            title: "Board creation success",
-            text: `"${name}" has been created`,
+            title: "Board modification success",
             icon: "success",
             confirmButtonColor: "#D70569",
           })
@@ -69,7 +66,7 @@ export default function PrivateBoardCreateModal({ couple_id }) {
       })
       .catch((err) =>
         swal.fire({
-          title: "Board creation failed",
+          title: "Board modification failed",
           text: `${err}`,
           icon: "error",
           confirmButtonColor: "#D70569",
@@ -90,14 +87,6 @@ export default function PrivateBoardCreateModal({ couple_id }) {
             </div>
             <div className={nameStyle}>Name</div>
             <input type="text" value={name} placeholder="Enter board name" onChange={onChangeName} className={inputStyle} ref={refName} />
-            <div className={nameStyle}>Category</div>
-            <select className={inputStyle} ref={refCategory}>
-              {category.map((option, idx) => (
-                <option value={option} key={idx}>
-                  {option}
-                </option>
-              ))}
-            </select>
             <div className={nameStyle}>Theme</div>
             <select className={inputStyle} ref={refTheme}>
               {theme.map((option, idx) => (
