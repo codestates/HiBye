@@ -1,7 +1,5 @@
-'use strict';
-const {
-  Model
-} = require('sequelize');
+"use strict";
+const { Model } = require("sequelize");
 module.exports = (sequelize, DataTypes) => {
   class User extends Model {
     /**
@@ -12,34 +10,37 @@ module.exports = (sequelize, DataTypes) => {
     static associate(models) {
       // define association here
       models.User.hasMany(models.Post, {
-        foreignKey: 'user_id',
-        onDelete: 'cascade',
-      })
-      models.User.hasMany(models.Comment, {
-        foreignKey: 'user_id',
-        onDelete: 'cascade',
-      })
-      models.User.belongsTo(models.Couple, {
+        foreignKey: "user_id",
         onDelete: "cascade",
+      });
+      models.User.hasMany(models.Comment, {
+        foreignKey: "user_id",
+        onDelete: "cascade",
+      });
+      models.User.belongsTo(models.Couple, {
+        onDelete: "set null",
         foreignkey: {
-          name: 'couple_id',
-          allowNull: true
-        }
-      })
+          name: "couple_id",
+          allowNull: true,
+        },
+      });
     }
   }
-  User.init({
-    username: DataTypes.STRING,
-    email: DataTypes.STRING,
-    password: DataTypes.STRING,
-    couple_id: {
-      type: DataTypes.INTEGER,
-      allowNull: true
-    }
-  }, {
-    sequelize,
-    underscored: true,
-    modelName: 'User',
-  });
+  User.init(
+    {
+      username: DataTypes.STRING,
+      email: DataTypes.STRING,
+      password: DataTypes.STRING,
+      couple_id: {
+        type: DataTypes.INTEGER,
+        allowNull: true,
+      },
+    },
+    {
+      sequelize,
+      underscored: true,
+      modelName: "User",
+    },
+  );
   return User;
 };

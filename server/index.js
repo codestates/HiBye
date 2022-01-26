@@ -6,6 +6,7 @@ const compression = require("compression");
 const helmet = require("helmet");
 const cookieParser = require('cookie-parser');
 const cors = require("cors");
+
 const indexRouter = require("./routes/index");
 const boardRouter = require("./routes/board");
 const boardsRouter = require("./routes/boards");
@@ -13,8 +14,9 @@ const postRouter = require("./routes/post");
 const postsRouter = require("./routes/posts");
 const commentRouter = require("./routes/comment");
 const commentsRouter = require("./routes/comments");
-const todoRouter = require("./routes/todos");
+const todoRouter = require("./routes/todo");
 const todosRouter = require("./routes/todos");
+const userRouter = require("./routes/user");
 
 app.use(helmet());
 app.use(express.json());
@@ -43,6 +45,7 @@ app.use("/comment", commentRouter);
 app.use("/comments", commentsRouter);
 app.use("/todo", todoRouter);
 app.use("/todos", todosRouter);
+app.use("/user", userRouter);
 
 // app.get("/", (req, res) => {
 //   res.send("Hello World!");
