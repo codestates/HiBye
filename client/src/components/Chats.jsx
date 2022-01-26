@@ -1,4 +1,3 @@
-import Spinner from "./Spinner";
 import EditBtn from "./Button/EditBtn";
 import CancelBtn from "./Button/CancelBtn";
 import axios from "axios";
@@ -8,7 +7,7 @@ import CancelBtn2 from "./Button/CancelBtn2";
 import CheckBtn from "./Button/CheckBtn";
 import getByteLength from "../utils/getByteLength";
 
-export default function Chats({ posts, user_id }) {
+export default function Chats({ chats, user_id }) {
   const deletePost = (post_id) => {
     swal
       .fire({
@@ -109,14 +108,10 @@ export default function Chats({ posts, user_id }) {
 
   return (
     <>
-      {posts.loading || posts.error ? (
-        <div className="flex justify-center">
-          <Spinner />
-        </div>
-      ) : posts.data.data.length === 0 ? (
+      {!chats ? null : chats.length === 0 ? (
         <div className="p-6 text-center text-lg text-gray-80 mb-4">There's no chat yet. Let's start chatting!</div>
       ) : (
-        posts.data.data.map((post) => (
+        chats.map((post) => (
           <div key={post.id} className="flex justify-between gap-5">
             <div className="border border-solid border-hibye-80 rounded-2xl m-2 p-5 flex-grow">
               <div className="flex mb-4 justify-between">

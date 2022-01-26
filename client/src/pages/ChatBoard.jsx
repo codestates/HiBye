@@ -1,7 +1,7 @@
 import { useParams } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
-import { useEffect, useState, useRef } from "react";
-import { getPosts } from "../redux/modules/posts";
+import { useEffect, useState, useRef, useCallback } from "react";
+// import { getPosts } from "../redux/modules/posts";
 import Error from "./Error";
 import Chats from "../components/Chats";
 import EditBtn from "../components/Button/EditBtn";
@@ -13,6 +13,8 @@ import getByteLength from "../utils/getByteLength";
 import swal from "sweetalert2";
 import axios from "axios";
 import CancelBtn from "../components/Button/CancelBtn";
+import { useInView } from "react-intersection-observer";
+
 export default function ChatBoard() {
   const dispatch = useDispatch();
 
@@ -38,11 +40,39 @@ export default function ChatBoard() {
     }, 2000);
   });
 
-  // 현재 보드에서 posts 불러옴
-  const posts = useSelector((state) => state.posts);
+  // 무한 스크롤(현재 보드에서 posts 불러옴)
+  const [refView, inView] = useInView({
+    threshold: 0.5,
+  });
+  const [chats, setChats] = useState([]);
+  const [page, setPage] = useState(1);
+  const [lastPage, setLastPage] = useState(1);
+  const [loading, setLoading] = useState(false);
+
+  const getChats = useCallback(async () => {
+    setLoading(true);
+    await axios.get(`${process.env.REACT_APP_API_URL}/posts/${boardId}?page=${page}`).then((res) => {
+      setChats((state) => [...state, ...res.data.data]);
+      setLastPage(res.data.lastPage);
+    });
+    setLoading(false);
+  }, [page, boardId]);
+
   useEffect(() => {
-    dispatch(getPosts(boardId));
-  }, [dispatch, boardId]);
+    if (page <= lastPage) getChats();
+  }, [getChats, page, lastPage]);
+
+  useEffect(() => {
+    if (inView && !loading) {
+      setPage((state) => state + 1);
+    }
+  }, [inView, loading]);
+
+  // // 현재 보드에서 posts 불러옴
+  // const posts = useSelector((state) => state.posts);
+  // useEffect(() => {
+  //   dispatch(getPosts(boardId, page));
+  // }, [dispatch, boardId, page]);
 
   // 보드 수정 모달 오픈
   const open = () => {
@@ -100,7 +130,7 @@ export default function ChatBoard() {
   };
 
   const sendPost = () => {
-    //
+    // 로그인 여부 검사
     if (!user_id) {
       swal.fire({
         title: "Chat sending failed",
@@ -198,7 +228,10 @@ export default function ChatBoard() {
             </div>
             {valid.isValid ? null : <div className="text-hibye-80 text-sm text-center mb-2">Invalid chat. Please check again.</div>}
             <div className="p-5">
-              <Chats posts={posts} user_id={user_id} />
+              <Chats chats={chats} user_id={user_id} />
+              <div ref={refView} className="text-center mt-4">
+                {loading ? <Spinner /> : null}
+              </div>
             </div>
           </div>
         </div>
