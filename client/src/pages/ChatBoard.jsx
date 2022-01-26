@@ -100,6 +100,17 @@ export default function ChatBoard() {
   };
 
   const sendPost = () => {
+    //
+    if (!user_id) {
+      swal.fire({
+        title: "Chat sending failed",
+        text: "Please sign in to send chat",
+        icon: "error",
+        confirmButtonColor: "#D70569",
+      });
+      return;
+    }
+
     // 유효성 검사
     const contentsByte = getByteLength(contents);
     if (contentsByte < 1 || contentsByte > 150 || /\s{2,}|^\s|\s$/g.test(contents)) {
