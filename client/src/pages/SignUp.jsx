@@ -1,11 +1,37 @@
-import { useState } from "react";
+import swal from "sweetalert2";
+import { useRef, useState } from "react";
 import { Link } from "react-router-dom";
 function SignUp() {
-  const [name, setName] = useState("");
-  const [errorMessage, setErrorMessage] = useState("");
-  const onChange = (e) => {
-    console.log(e.target.value);
+  const onSignUp = () => {
+    if (!refUsername.current.value || !refEmail.current.value || !refPassword.current.value) {
+      setErrorMessage("Please enter all informations.");
+    } else {
+      if (refPassword.current.value === refPasswordCheck.current.value) {
+        const userInfo = { username: refUsername.current.value, email: refEmail.current.value, password: refPassword.current.value };
+        setErrorMessage("");
+        console.log(userInfo);
+        swal.fire({
+          title: `Welcome ${userInfo.username}`,
+          text: `Confirm mail has been sent to ${userInfo.email}`,
+          icon: "success",
+          confirmButtonText: "Let's go sign in",
+        });
+        refUsername.current.value = "";
+        refEmail.current.value = "";
+        refPassword.current.value = "";
+        refPasswordCheck.current.value = "";
+      } else {
+        setErrorMessage("Invalid password. Check your password.");
+      }
+    }
   };
+  const refUsername = useRef("");
+  const refEmail = useRef("");
+  const refPassword = useRef("");
+  const refPasswordCheck = useRef("");
+
+  const [errorMessage, setErrorMessage] = useState("");
+
   const nameStyle = "text-hibye-60 font-bold mb-2 text-lg";
   const inputStyle = "w-80 mb-4 p-2 text-hibye-100 bg-hibye-input rounded-lg";
 
@@ -31,15 +57,17 @@ function SignUp() {
         <div className="flex justify-center items-center w-2/3 bg-hibye-10 rounded-tr-xl rounded-br-xl">
           <div className="p-6">
             <div className={nameStyle}>Username</div>
-            <input type="text" placeholder="Enter a unique username" className={inputStyle} onChange={onChange} />
+            <input ref={refUsername} type="text" placeholder="Enter a unique username" className={inputStyle} />
             <div className={nameStyle}>Email address</div>
-            <input type="text" placeholder="Enter your email address" className={inputStyle} />
+            <input ref={refEmail} type="email" placeholder="Enter your email address" className={inputStyle} />
             <div className={nameStyle}>Password</div>
-            <input type="password" placeholder="Enter your password" className={inputStyle} />
+            <input ref={refPassword} type="password" placeholder="Enter your password" className={inputStyle} />
             <div className={nameStyle}>Check your password</div>
-            <input type="password" placeholder="Enter your password" className={inputStyle} />
+            <input ref={refPasswordCheck} type="password" placeholder="Enter your password" className={inputStyle} />
             <div className="text-center text-hibye-80">{errorMessage}</div>
-            <div className="button--pink--save mt-4">Sign Up</div>
+            <div className="button--pink--save mt-4" onClick={onSignUp}>
+              Sign Up
+            </div>
             <div className="flex justify-center text-center text-hibye-80 mt-4">
               <div className="mr-2">Already have an account?</div>
               <Link to="/signin" className="underline decoration-solid">
