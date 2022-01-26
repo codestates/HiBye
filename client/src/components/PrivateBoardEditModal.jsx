@@ -51,7 +51,7 @@ export default function PrivateBoardEditModal({ board_id, prev_name, prev_desc }
       .patch(`${process.env.REACT_APP_API_URL}/board/${board_id}`, {
         name: name,
         theme: refTheme.current.value,
-        description: desc,
+        desc: desc,
       })
       .then(() => {
         swal
