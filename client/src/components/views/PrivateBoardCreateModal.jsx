@@ -9,8 +9,27 @@ import axios from "axios";
 import swal from "sweetalert2";
 
 export default function PrivateBoardCreateModal({ couple_id }) {
-  const isOpen = useSelector((state) => state.privateBoardCreateModal.isOpen);
   const dispatch = useDispatch();
+
+  // Create Modal 열림 여부
+  const isOpen = useSelector((state) => state.privateBoardCreateModal.isOpen);
+
+  // Board 이름
+  const [name, setName] = useState("");
+  const onChangeName = (e) => {
+    setName(e.target.value);
+  };
+
+  // Board 설명
+  const [desc, setDesc] = useState("");
+  const onChangeDesc = (e) => {
+    setDesc(e.target.value);
+  };
+
+  // 유효성 여부
+  const [valid, setValid] = useState({ isValid: true, reason: "" });
+
+  // Create Modal 닫기 액션
   const close = () => {
     setName("");
     setDesc("");
@@ -18,24 +37,15 @@ export default function PrivateBoardCreateModal({ couple_id }) {
     dispatch(closeModal());
   };
 
-  const [name, setName] = useState("");
-  const onChangeName = (e) => {
-    setName(e.target.value);
-  };
-
-  const [desc, setDesc] = useState("");
-  const onChangeDesc = (e) => {
-    setDesc(e.target.value);
-  };
-
+  // 참조
   const refName = useRef(null);
   const refCategory = useRef(null);
   const refTheme = useRef(null);
   const refDesc = useRef(null);
 
-  const [valid, setValid] = useState({ isValid: true, reason: "" });
-
+  // 저장
   const save = () => {
+    // 유효성 검사
     const nameByte = getByteLength(name);
     if (nameByte < 1 || nameByte > 36 || /\s{2,}|^\s|\s$|[^\w가-힣\x20\s]/g.test(name)) {
       setValid((state) => ({ ...state, isValid: false, reason: "name" }));
@@ -48,12 +58,13 @@ export default function PrivateBoardCreateModal({ couple_id }) {
       return;
     }
 
+    // 보드 생성
     axios
       .post(`${process.env.REACT_APP_API_URL}/board/${couple_id}`, {
         name: name,
         category: refCategory.current.value,
         theme: refTheme.current.value,
-        description: desc,
+        desc: desc,
       })
       .then(() => {
         swal
@@ -65,6 +76,7 @@ export default function PrivateBoardCreateModal({ couple_id }) {
           })
           .then(() => {
             close();
+            window.location.reload();
           });
       })
       .catch((err) =>

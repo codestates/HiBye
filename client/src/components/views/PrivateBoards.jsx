@@ -5,6 +5,7 @@ import PlusBtn from "../Button/PlusBtn";
 import Spinner from "../Spinner";
 
 export default function PrivateBoards({ boards, click, choseIcon }) {
+  // Create Modal 여는 액션
   const dispatch = useDispatch();
   const open = () => {
     dispatch(openModal());
@@ -24,6 +25,8 @@ export default function PrivateBoards({ boards, click, choseIcon }) {
         <div className="flex justify-center">
           <Spinner />
         </div>
+      ) : boards.data.data.length === 0 ? (
+        <div className="border-hibye-60">There is no board.</div>
       ) : (
         boards.data.data.map((board) => (
           <Link to={`/${board.category}/${board.id}`} key={board.id} className="mb-4 truncate block hover:text-hibye-80 duration-300" onClick={click}>
