@@ -12,6 +12,7 @@ import PrivateBoardEditModal from "../components/PrivateBoardEditModal";
 import getByteLength from "../utils/getByteLength";
 import swal from "sweetalert2";
 import axios from "axios";
+import CancelBtn from "../components/Button/CancelBtn";
 export default function ChatBoard() {
   const { boardId } = useParams();
   const dispatch = useDispatch();
@@ -71,14 +72,56 @@ export default function ChatBoard() {
         setContents("");
         refContents.current.value = "";
       })
+      .then(() => {
+        swal.fire({
+          title: "Chat sending success",
+          icon: "success",
+          confirmButtonColor: "#D70569",
+        });
+      })
       .catch((err) =>
         swal.fire({
-          title: "Chatting failed",
+          title: "Chat sending failed",
           text: `${err}`,
           icon: "error",
           confirmButtonColor: "#D70569",
         }),
       );
+  };
+
+  // Delete/board
+  const deleteBoard = () => {
+    swal
+      .fire({
+        title: "Are yue sure?",
+        showCancelButton: true,
+        icon: "warning",
+        confirmButtonColor: "#D70569",
+        confirmButtonText: "Yes, delete",
+        cancelButtonText: "Cancel",
+      })
+      .then((result) => {
+        if (result.isConfirmed) {
+          axios
+            .delete(`${process.env.REACT_APP_API_URL}/board/${board.id}`)
+            .then(() => {
+              swal.fire({
+                title: "Board delete success",
+                text: `"${board.name}" has been deleted`,
+                icon: "success",
+                confirmButtonColor: "#D70569",
+              });
+            })
+            .catch((err) => {
+              swal.fire({
+                title: "Board delete failed",
+                text: `${err}`,
+                icon: "error",
+                confirmButtonColor: "#D70569",
+              });
+            });
+        }
+      });
   };
 
   return (
@@ -103,8 +146,13 @@ export default function ChatBoard() {
               <div className="mb-4 flex">
                 <div className="text-hibye-80 font-bold text-xl">{board.name}</div>
                 {board.couple_id ? (
-                  <div className="ml-4 self-center" onClick={open}>
-                    <EditBtn />
+                  <div className="flex">
+                    <div className="ml-4 self-center" onClick={open}>
+                      <EditBtn />
+                    </div>
+                    <div className="ml-1 self-center" onClick={deleteBoard}>
+                      <CancelBtn />
+                    </div>
                   </div>
                 ) : null}
               </div>
