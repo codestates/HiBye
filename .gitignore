@@ -4,3 +4,4 @@ node_modules
 *.pem
 client/build
 seeders
+package-lock.json
