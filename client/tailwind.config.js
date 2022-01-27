@@ -21,6 +21,9 @@ module.exports = {
           10: "#EFEFEF",
         },
       },
+      spacing: {
+        "640px": "640px"
+      },
       backgroundImage: {
         "hibye-banner": "url('../public/images/banner.jpg')",
         "hibye-main-1-front": "url('../public/images/main-1-front.jpg')",

@@ -17,7 +17,8 @@ export default function Header() {
   let d_day = null;
   if (started_at) {
     const today = new Date();
-    d_day = started_at.getTime() - today.getTime();
+    const gap = started_at.getTime() - today.getTime();
+    d_day = Math.floor(gap / (1000 * 60 * 60 * 24)) * -1;
   }
 
   // Navbar 토글
