@@ -46,7 +46,7 @@ export default function ChatBoard() {
     setLoading(true);
     await axios.get(`${process.env.REACT_APP_API_URL}/posts/${boardId}?page=${page}`).then((res) => {
       setChats((state) => [...state, ...res.data.data]);
-      setLastPage(res.data.lastPage);
+      setLastPage(res.data.lastpage);
     });
     setLoading(false);
   }, [page, boardId]);
