@@ -1,18 +1,24 @@
 import dayjs from "dayjs";
 import SearchBtn from "./Button/SearchBtn";
 import EditBtn from "./Button/EditBtn";
-import CancelBtn from "./Button/CancelBtn";
+import CancelBtn, { CancelBtnSmall } from "./Button/CancelBtn";
 import { BiArrowToLeft, BiLeftArrowAlt, BiArrowToRight, BiRightArrowAlt } from "react-icons/bi";
 import PrivateBoardEditModal from "./PrivateBoardEditModal";
 import swal from "sweetalert2";
 import axios from "axios";
 import { useEffect, useState, useCallback, useRef } from "react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { openModal } from "../redux/modules/privateBoardEditModal";
 import { useDispatch, useSelector } from "react-redux";
+import { useQuery } from "../utils/useQuery";
 
 export default function PostPage({ board, boardId }) {
   const dispatch = useDispatch();
+  const navigate = useNavigate();
+  const query = useQuery();
+
+  const queryPage = query.get("page");
+  const querySearch = query.get("search") || "";
 
   // 유저 아이디 받아옴
   const user_id = useSelector((state) => state.user.id);
@@ -71,29 +77,41 @@ export default function PostPage({ board, boardId }) {
 
   const onKeyPressSearch = (e) => {
     if (e.key === "Enter") {
-      if (e.target.value.length !== 0 && e.target.value.length < 3) {
+      if (e.target.value.length !== 0 && e.target.value.length < 2) {
         swal.fire({
           title: "Search failed",
-          text: "Please type more than 3 letters",
+          text: "Please type more than 2 letters",
           icon: "error",
           confirmButtonColor: "#D70569",
         });
         return;
+      } else {
+        setSearch(e.target.value);
+        setInputSearch("");
+        setPage(1);
+        setInputNum(1);
+        navigate(`/post/${boardId}?page=${1}&search=${e.target.value}`);
+        refSearch.current.blur();
       }
-      setSearch(e.target.value);
     }
+  };
+
+  const searchCancel = () => {
+    setSearch("");
+    setInputSearch("");
+    navigate(`/post/${boardId}?page=${1}&search=${""}`);
   };
 
   // Post 불러옴
   const [posts, setPosts] = useState([]);
-  const [lastPage, setLastPage] = useState(1);
   const [page, setPage] = useState(1);
+  const [lastPage, setLastPage] = useState(Number.MAX_SAFE_INTEGER);
   const getPosts = useCallback(async () => {
     await axios
-      .get(`${process.env.REACT_APP_API_URL}/posts/${boardId}?page=${page}&search=${search}`)
+      .get(`${process.env.REACT_APP_API_URL}/posts/${boardId}?page=${queryPage}&search=${querySearch}`)
       .then((res) => {
         setPosts(() => [...res.data.data]);
-        setLastPage(res.data.lastPage);
+        setLastPage(res.data.lastpage);
       })
       .catch((err) => {
         swal.fire({
@@ -103,59 +121,55 @@ export default function PostPage({ board, boardId }) {
           confirmButtonColor: "#D70569",
         });
       });
-  }, [page, boardId, search]);
+  }, [queryPage, boardId, querySearch]);
 
   useEffect(() => {
-    if (page <= lastPage) {
+    if (queryPage <= lastPage) {
       getPosts();
     }
-  }, [getPosts, page, lastPage]);
+  }, [getPosts, queryPage, lastPage]);
 
   const onKeyPress = (e) => {
     if (e.key === "Enter") {
       const number = parseInt(e.target.value);
       if (!e.target.value) return;
-      if (typeof number === "number") setPage(number);
+      if (typeof number === "number") {
+        setPage(number);
+        navigate(`/post/${boardId}?page=${number}&search=${querySearch}`);
+      }
     }
   };
 
   const btnStyle = "text-2xl text-hibye-80 hover:text-hibye-40 cursor-pointer duration-300 self-center cursor-pointer";
 
-  const refInput = useRef(null);
   const [inputNum, setInputNum] = useState("");
   const onChangeNum = (e) => {
     if (0 <= e.target.value && e.target.value <= lastPage) setInputNum(e.target.value);
     if (0 >= e.target.value && String(e.target.value).length > 1) {
-      refInput.current.value = 1;
       setInputNum(1);
     }
   };
 
-  const goNextPage = () => {
-    if (page > 1) {
+  const goPage = (params) => {
+    if (params === "prev") {
       setPage((state) => state - 1);
-      refInput.current.value = page;
+      setInputNum((state) => state - 1);
+      navigate(`/post/${boardId}?page=${page - 1}&search=${search}`);
     }
-  };
-
-  const goPrevPage = () => {
-    if (page < lastPage) {
+    if (params === "next") {
       setPage((state) => state + 1);
-      refInput.current.value = page;
+      setInputNum((state) => state + 1);
+      navigate(`/post/${boardId}?page=${page + 1}&search=${search}`);
     }
-  };
-
-  const goFirstPage = () => {
-    if (page !== 1) {
+    if (params === "first") {
       setPage(1);
-      refInput.current.value = page;
+      setInputNum(1);
+      navigate(`/post/${boardId}?page=${1}&search=${search}`);
     }
-  };
-
-  const goLastPage = () => {
-    if (page !== lastPage) {
+    if (params === "last") {
       setPage(lastPage);
-      refInput.current.value = page;
+      setInputNum(lastPage);
+      navigate(`/post/${boardId}?page=${lastPage}&search=${search}`);
     }
   };
 
@@ -203,7 +217,11 @@ export default function PostPage({ board, boardId }) {
             </div>
             <div>
               {posts.length === 0 ? (
-                <div className="p-6 text-center text-lg text-gray-80 m-4">There's no post yet. Let's start posting!</div>
+                !search ? (
+                  <div className="p-6 text-center text-lg text-gray-80 m-4">There's no post yet. Let's start posting!</div>
+                ) : (
+                  <div className="p-6 text-center text-lg text-gray-80 m-4">We couldn't find a post containing "{search}"</div>
+                )
               ) : (
                 posts.map((post) => (
                   <Link to={`/post/${boardId}/${post.id}`} key={post.id}>
@@ -241,13 +259,23 @@ export default function PostPage({ board, boardId }) {
                   value={inputSearch}
                   className="absolute w-6 pl-2 text-transparent pr-2 bg-transparent duration-300 focus:bg-hibye-20 focus:w-40 focus:border-hibye-80 focus:text-hibye-100"
                 />
-                <SearchBtn className="absolute" />
+                <div className="flex">
+                  <SearchBtn className="absolute" />
+                  {search ? (
+                    <div className="flex items-center gap-1">
+                      <div className="ml-2 text-hibye-80">{querySearch}</div>
+                      <div onClick={searchCancel}>
+                        <CancelBtnSmall className="self-center" />
+                      </div>
+                    </div>
+                  ) : null}
+                </div>
               </div>
               {user_id ? <div className="button--pink">Post</div> : null}
             </div>
             <div className="flex justify-center mt-6 pb-40 gap-4">
-              <BiArrowToLeft className={`${btnStyle} ${page === 1 || page === 0 ? "text-hibye-40 cursor-default" : ""}`} onClick={goFirstPage} />
-              <BiLeftArrowAlt className={`${btnStyle} ${page === 1 || page === 0 ? "text-hibye-40 cursor-default" : ""}`} onClick={goNextPage} />
+              <BiArrowToLeft className={`${btnStyle} ${page === 1 || page === 0 ? "text-hibye-40 cursor-default" : ""}`} onClick={() => goPage("first")} />
+              <BiLeftArrowAlt className={`${btnStyle} ${page === 1 || page === 0 ? "text-hibye-40 cursor-default" : ""}`} onClick={() => goPage("prev")} />
               <div>
                 <input
                   style={{ appearance: "none" }}
@@ -256,15 +284,14 @@ export default function PostPage({ board, boardId }) {
                   min="1"
                   max={lastPage}
                   className="mr-1 bg-gray-10 text-center w-12 rounded-lg pl-1 pr-1"
-                  placeholder={page}
+                  placeholder={queryPage}
                   value={inputNum}
                   onChange={onChangeNum}
-                  ref={refInput}
                 />
-                <span>/ {lastPage}</span>
+                {lastPage >= Number.MAX_SAFE_INTEGER ? null : <span>/ {lastPage}</span>}
               </div>
-              <BiRightArrowAlt className={`${btnStyle} ${page === lastPage ? "text-hibye-40 cursor-default" : ""}`} onClick={goPrevPage} />
-              <BiArrowToRight className={`${btnStyle} ${page === lastPage ? "text-hibye-40 cursor-default" : ""}`} onClick={goLastPage} />
+              <BiRightArrowAlt className={`${btnStyle} ${page === lastPage ? "text-hibye-40 cursor-default" : ""}`} onClick={() => goPage("next")} />
+              <BiArrowToRight className={`${btnStyle} ${page === lastPage ? "text-hibye-40 cursor-default" : ""}`} onClick={() => goPage("last")} />
             </div>
           </div>
         </div>

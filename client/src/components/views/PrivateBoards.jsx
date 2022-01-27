@@ -29,7 +29,7 @@ export default function PrivateBoards({ boards, click, choseIcon }) {
         <div className="border-hibye-60">There is no board.</div>
       ) : (
         boards.data.data.map((board) => (
-          <Link to={`/${board.category}/${board.id}`} key={board.id} className="mb-4 truncate block hover:text-hibye-80 duration-300" onClick={click}>
+          <Link to={`/${board.category}/${board.id}?page=1&search=`} key={board.id} className="mb-4 truncate block hover:text-hibye-80 duration-300" onClick={click}>
             {choseIcon(board.category)} {board.name}
           </Link>
         ))
