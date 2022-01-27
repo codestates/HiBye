@@ -4,7 +4,7 @@ import privateBoardEditModal from "./privateBoardEditModal";
 import publicBoards from "./publicBoards";
 import privateBoards from "./privateBoards";
 import user from "./user";
-import posts from "./posts";
+// import posts from "./posts";
 
 const rootReducer = combineReducers({
   privateBoardCreateModal,
@@ -12,7 +12,7 @@ const rootReducer = combineReducers({
   publicBoards,
   privateBoards,
   user,
-  posts,
+  // posts,
 });
 
 export default rootReducer;
