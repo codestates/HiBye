@@ -152,24 +152,32 @@ export default function PostPage({ board, boardId }) {
 
   const goPage = (params) => {
     if (params === "prev") {
-      setPage((state) => state - 1);
-      setInputNum((state) => state - 1);
-      navigate(`/post/${boardId}?page=${page - 1}&search=${search}`);
+      if (page > 1) {
+        setPage((state) => state - 1);
+        setInputNum((state) => state - 1);
+        navigate(`/post/${boardId}?page=${page - 1}&search=${search}`);
+      }
     }
     if (params === "next") {
-      setPage((state) => state + 1);
-      setInputNum((state) => state + 1);
-      navigate(`/post/${boardId}?page=${page + 1}&search=${search}`);
+      if (page < lastPage) {
+        setPage((state) => state + 1);
+        setInputNum((state) => state + 1);
+        navigate(`/post/${boardId}?page=${page + 1}&search=${search}`);
+      }
     }
     if (params === "first") {
-      setPage(1);
-      setInputNum(1);
-      navigate(`/post/${boardId}?page=${1}&search=${search}`);
+      if (page > 1) {
+        setPage(1);
+        setInputNum(1);
+        navigate(`/post/${boardId}?page=${1}&search=${search}`);
+      }
     }
     if (params === "last") {
-      setPage(lastPage);
-      setInputNum(lastPage);
-      navigate(`/post/${boardId}?page=${lastPage}&search=${search}`);
+      if (page < lastPage) {
+        setPage(lastPage);
+        setInputNum(lastPage);
+        navigate(`/post/${boardId}?page=${lastPage}&search=${search}`);
+      }
     }
   };
 
