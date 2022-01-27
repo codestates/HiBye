@@ -20,7 +20,7 @@ export default function Navbar({ click, publicBoards, privateBoards, couple_id, 
   };
 
   return (
-    <div className="bg-hibye-10 p-4 text-hibye-60 absolute z-50 -translate-x-4 block max-w-xs">
+    <div className="bg-hibye-10 p-4 text-hibye-60 absolute z-50 -translate-x-4 block max-w-xs bg-opacity-95">
       <PublicBoards boards={publicBoards} click={click} choseIcon={choseIcon} />
       {couple_id && is_matching ? <PrivateBoards boards={privateBoards} click={click} choseIcon={choseIcon} /> : null}
     </div>
