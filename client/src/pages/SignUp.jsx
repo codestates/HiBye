@@ -60,19 +60,20 @@ function SignUp() {
     <div className="flex justify-center items-center bg-gradient-to-r from-hibye-20 to-hibye-40 w-screen h-screen">
       <div className="flex w-1/2">
         {/* left side */}
-        <div className="flex flex-col justify-between w-2/3 bg-hibye-80 rounded-tl-xl rounded-bl-xl text-center p-12">
+        <div className="flex flex-col justify-between relative w-2/3 bg-hibye-signup bg-cover bg-center rounded-tl-xl rounded-bl-xl text-center p-12">
           {/* logo */}
-          <div className="">
+          <div className="z-50">
             <Link to="/" className="block text-hibye-10 text-3xl font-bold mb-2">
               HiBye
             </Link>
-            <span className="block text-hibye-60 text-base">Your love starts here.</span>
+            <span className="block text-hibye-10 text-base">Your love starts here.</span>
           </div>
           {/* text */}
-          <div className="">
+          <div className="z-50">
             <span className="block text-hibye-60 text-base">It's always better</span>
             <span className="block text-hibye-60 text-base">when we're together.</span>
           </div>
+          <div className="w-full h-full absolute top-0 left-0 rounded-tl-xl rounded-bl-xl bg-hibye-signup bg-cover bg-center"></div>
         </div>
         {/* right side */}
         <div className="flex justify-center items-center w-2/3 bg-hibye-10 rounded-tr-xl rounded-br-xl">
