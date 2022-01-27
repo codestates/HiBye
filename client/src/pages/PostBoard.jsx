@@ -4,7 +4,7 @@ import Error from "./Error";
 import useBoardCheck from "../utils/useBoardCheck";
 import Spinner from "../components/Spinner";
 import PostBoardMain from "../components/PostBoardMain";
-import Post from "../components/Post";
+// import Post from "../components/Post";
 
 export default function PostBoard() {
   // Params로 경로 확인
@@ -38,7 +38,7 @@ export default function PostBoard() {
       ) : (
         <Routes>
           <Route exact path="/" element={<PostBoardMain board={board} boardId={boardId} />} />
-          <Route exact path="/:postId" element={<Post />} />
+          {/* <Route exact path="/:postId" element={<Post />} /> */}
         </Routes>
       )}
     </>
