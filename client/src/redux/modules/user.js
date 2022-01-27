@@ -3,18 +3,12 @@ import { createSlice } from "@reduxjs/toolkit";
 const userSlice = createSlice({
   name: "user",
   initialState: {
-    // id: null,
-    // username: null,
-    // email: null,
-    // couple_id: null,
-    // is_matching: false,
-    // d_day: null,
-    id: 1,
-    username: "yuchan",
+    id: null,
+    username: null,
     email: null,
-    couple_id: 1,
-    is_matching: true,
-    d_day: null,
+    couple_id: null,
+    is_matching: false,
+    started_at: null,
   },
   reducers: {
     setUserInfo: (state, action) => {
@@ -23,7 +17,7 @@ const userSlice = createSlice({
       state.email = action.payload.email;
       state.couple_id = action.payload.couple_id;
       state.is_matching = action.payload.is_matching;
-      state.d_day = action.payload.d_day;
+      state.started_at = action.payload.started_at;
     },
     removeUserInfo: (state) => {
       state.id = null;
@@ -31,7 +25,7 @@ const userSlice = createSlice({
       state.email = null;
       state.couple_id = null;
       state.is_matching = false;
-      state.d_day = null;
+      state.started_at = null;
     },
   },
 });
