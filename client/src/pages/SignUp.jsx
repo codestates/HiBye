@@ -5,28 +5,45 @@ import axios from "axios";
 function SignUp() {
   const navigate = useNavigate();
   const onSignUp = () => {
-    if (!refUsername.current.value || !refEmail.current.value || !refPassword.current.value) {
-      setErrorMessage("Please enter all informations.");
-    } else {
-      if (refPassword.current.value === refPasswordCheck.current.value) {
-        const userInfo = { username: refUsername.current.value, email: refEmail.current.value, password: refPassword.current.value };
-        setErrorMessage("");
-        console.log(userInfo);
-        axios
-          .post("http://localhost:80/signup", { username: refUsername.current.value, email: refEmail.current.value, password: refPassword.current.value })
-          .then((data) => {
-            swal.fire({
-              title: `Welcome ${userInfo.username}`,
-              text: `Confirm mail has been sent to ${userInfo.email}`,
-              icon: "success",
-              confirmButtonText: "Let's go sign in",
+    const emailRegexp = /^[a-zA-Z0-9.!#$%&'*+\/=?^_`{|}~-]+@[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?(?:\.[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?)*$/;
+
+    // 모든 항목이 채워진 경우
+    if (refUsername.current.value && refEmail.current.value && refPassword.current.value) {
+      // 이메일이 올바른 경우
+      if (emailRegexp.test(refEmail.current.value)) {
+        // 비밀번호가 일치하는 경우
+        if (refPassword.current.value === refPasswordCheck.current.value) {
+          console.log("회원가입 성공");
+          const userinfo = { username: refUsername.current.value, email: refEmail.current.value, password: refPassword.current.value };
+          setErrorMessage("");
+          axios
+            .post("http://localhost:80/signup", userinfo)
+            .then((data) => {
+              swal.fire({
+                title: "Success",
+                text: "Account successfully created.",
+                icon: "success",
+                confirmButtonText: "Let's go",
+              });
+              navigate("/signin");
+            })
+            .catch((err) => {
+              setErrorMessage("Account already exists.");
             });
-            navigate("/signin");
-          })
-          .catch((err) => console.log(err));
+        } else if (refPassword.current.value !== refPasswordCheck.current.value) {
+          // 비밀번호가 일치하지 않는 경우
+          setErrorMessage("Mismatched password.");
+        } else {
+          // 그 외 유효하지 않은 경우
+          setErrorMessage("Invalid data.");
+        }
       } else {
-        setErrorMessage("Invalid password. Check your password.");
+        // 이메일이 올바르지 않은 경우
+        setErrorMessage("Invalid email address.");
       }
+    } else {
+      // 모든 항목이 채워지지 않은 경우
+      setErrorMessage("Please fill in everything.");
     }
   };
   const refUsername = useRef("");
