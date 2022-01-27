@@ -14,6 +14,7 @@ import swal from "sweetalert2";
 import axios from "axios";
 import CancelBtn from "../components/Button/CancelBtn";
 import { useInView } from "react-intersection-observer";
+import useBoardCheck from "../utils/useBoardCheck";
 
 export default function ChatBoard() {
   const dispatch = useDispatch();
@@ -21,16 +22,8 @@ export default function ChatBoard() {
   // Params로 경로 확인
   const { boardId } = useParams();
 
-  // Params와 저장되어 있는 보드 목록을 비교하여 옳은 접근인지 판단
-  // filter를 사용하기 위하여 무조건 배열 형태로 나오게 만듦
-  const publicBoards = useSelector((state) => state.publicBoards);
-  const privateBoards = useSelector((state) => state.privateBoards);
-  const publicBoardsData = publicBoards.data.data || [];
-  const privateBoardsData = privateBoards.data.data || [];
-  const publicBoard = publicBoardsData.filter((board) => String(board.id) === boardId);
-  const privateBoard = privateBoardsData.filter((board) => String(board.id) === boardId);
-  const board = publicBoard.length !== 0 ? publicBoard[0] : privateBoard[0];
-  const isLoading = publicBoards.loading && privateBoards.loading;
+  // 올바른 보드인지 확인
+  const { board, isLoading } = useBoardCheck(boardId);
 
   // 시간 확인해서 로딩중에 에러로 안보내게 만듦
   const [checkTwoSec, setCheckTwoSec] = useState(false);

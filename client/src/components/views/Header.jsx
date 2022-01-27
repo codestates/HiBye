@@ -42,6 +42,12 @@ export default function Header() {
     }
   }, [dispatch, couple_id, is_matching]);
 
+  // SignOut
+  const signOut = () => {
+    dispatch(removeUserInfo());
+    window.location.reload();
+  };
+
   return (
     <div className="bg-hibye-10 h-16">
       <div className="inner p-4">
@@ -62,7 +68,7 @@ export default function Header() {
                   <span className="text-hibye-60 text-sm font-bold ml-1">Days</span>
                 </div>
               ) : null}
-              <button className="button--pink ml-6" onClick={() => dispatch(removeUserInfo())}>
+              <button className="button--pink ml-6" onClick={signOut}>
                 Sign Out
               </button>
               <Link to="./mypage" className="button--pink ml-4">
