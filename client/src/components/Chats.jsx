@@ -24,12 +24,16 @@ export default function Chats({ posts, user_id }) {
           axios
             .delete(`${process.env.REACT_APP_API_URL}/post/${post_id}`)
             .then(() => {
-              swal.fire({
-                title: "Chat delete success",
-                text: "",
-                icon: "success",
-                confirmButtonColor: "#D70569",
-              });
+              swal
+                .fire({
+                  title: "Chat delete success",
+                  text: "",
+                  icon: "success",
+                  confirmButtonColor: "#D70569",
+                })
+                .then(() => {
+                  window.location.reload();
+                });
             })
             .catch((err) => {
               swal.fire({
@@ -90,6 +94,7 @@ export default function Chats({ posts, user_id }) {
           })
           .then(() => {
             editOff();
+            window.location.reload();
           });
       })
       .catch((err) => {

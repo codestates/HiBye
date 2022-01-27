@@ -10,20 +10,31 @@ import { getPrivateBoards } from "../../redux/modules/privateBoards";
 import { removeUserInfo } from "../../redux/modules/user";
 
 export default function Header() {
-  const { id, couple_id, is_matching, d_day } = useSelector((state) => state.user);
+  // 유저정보 호출
+  const { id, couple_id, is_matching, started_at } = useSelector((state) => state.user);
 
+  // D-day 계산
+  let d_day = null;
+  if (started_at) {
+    const today = new Date();
+    d_day = started_at.getTime() - today.getTime();
+  }
+
+  // Navbar 토글
   const navRef = useRef(null);
   const [isActive, setIsActive] = useDetectOutsideClick(navRef, false);
   const click = useCallback(() => {
     setIsActive(!isActive);
   }, [isActive, setIsActive]);
 
+  // 공용 보드 목록 호출
   const publicBoards = useSelector((state) => state.publicBoards);
   const dispatch = useDispatch();
   useEffect(() => {
     dispatch(getPublicBoards());
   }, [dispatch]);
 
+  // 커플 보드 목록 호출
   const privateBoards = useSelector((state) => state.privateBoards);
   useEffect(() => {
     if (couple_id && is_matching) {
@@ -34,7 +45,7 @@ export default function Header() {
   return (
     <div className="bg-hibye-10 h-16">
       <div className="inner p-4">
-        <GiHamburgerMenu className={`text-3xl absolute left-4 cursor-pointer ${isActive ? "text-hibye-60" : "text-hibye-80"}`} onClick={click} />
+        <GiHamburgerMenu className={`text-3xl absolute left-4 cursor-pointer hover:text-hibye-60 ${isActive ? "text-hibye-60" : "text-hibye-80"}`} onClick={click} />
         <div ref={navRef} className="absolute top-16">
           {isActive ? <Navbar click={click} publicBoards={publicBoards} privateBoards={privateBoards} couple_id={couple_id} is_matching={is_matching} /> : null}
         </div>

@@ -7,10 +7,13 @@ import getByteLength from "../utils/getByteLength";
 import axios from "axios";
 import swal from "sweetalert2";
 
-// Theme은 아직 하나라서 미구현
 export default function PrivateBoardEditModal({ board_id, prev_name, prev_desc }) {
-  const isOpen = useSelector((state) => state.privateBoardEditModal.isOpen);
   const dispatch = useDispatch();
+
+  // Edit Modal 열림 여부
+  const isOpen = useSelector((state) => state.privateBoardEditModal.isOpen);
+
+  // 닫는 버튼
   const close = () => {
     setName(prev_name);
     setDesc(prev_desc);
@@ -18,23 +21,29 @@ export default function PrivateBoardEditModal({ board_id, prev_name, prev_desc }
     dispatch(closeModal());
   };
 
+  // Board 이름
   const [name, setName] = useState(prev_name);
   const onChangeName = (e) => {
     setName(e.target.value);
   };
 
+  // Board 설명
   const [desc, setDesc] = useState(prev_desc);
   const onChangeDesc = (e) => {
     setDesc(e.target.value);
   };
 
+  // 유효성 여부
+  const [valid, setValid] = useState({ isValid: true, reason: "" });
+
+  // 참조
   const refName = useRef(null);
   const refTheme = useRef(null);
   const refDesc = useRef(null);
 
-  const [valid, setValid] = useState({ isValid: true, reason: "" });
-
+  // 저장
   const save = () => {
+    // 유효성 검사
     const nameByte = getByteLength(name);
     if (nameByte < 1 || nameByte > 36 || /\s{2,}|^\s|\s$|[^\w가-힣\x20\s]/g.test(name)) {
       setValid((state) => ({ ...state, isValid: false, reason: "name" }));
@@ -47,6 +56,7 @@ export default function PrivateBoardEditModal({ board_id, prev_name, prev_desc }
       return;
     }
 
+    // 보드 수정
     axios
       .patch(`${process.env.REACT_APP_API_URL}/board/${board_id}`, {
         name: name,
@@ -62,6 +72,7 @@ export default function PrivateBoardEditModal({ board_id, prev_name, prev_desc }
           })
           .then(() => {
             close();
+            window.location.reload();
           });
       })
       .catch((err) =>
