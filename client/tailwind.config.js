@@ -21,6 +21,13 @@ module.exports = {
           10: "#EFEFEF",
         },
       },
+      backgroundImage: {
+        "hibye-banner": "url('../public/images/banner.jpg')",
+        "hibye-main-1-front": "url('../public/images/main-1-front.jpg')",
+        "hibye-main-1-back": "url('../public/images/main-1-back.jpg')",
+        "hibye-main-2": "url('../public/images/main-2.jpg')",
+        "hibye-signup": "url('../public/images/signup.jpg')",
+      },
     },
   },
   plugins: [],

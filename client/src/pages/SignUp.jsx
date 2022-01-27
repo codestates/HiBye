@@ -1,31 +1,49 @@
 import swal from "sweetalert2";
 import { useRef, useState } from "react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import axios from "axios";
 function SignUp() {
+  const navigate = useNavigate();
   const onSignUp = () => {
-    if (!refUsername.current.value || !refEmail.current.value || !refPassword.current.value) {
-      setErrorMessage("Please enter all informations.");
-    } else {
-      if (refPassword.current.value === refPasswordCheck.current.value) {
-        const userInfo = { username: refUsername.current.value, email: refEmail.current.value, password: refPassword.current.value };
-        setErrorMessage("");
-        console.log(userInfo);
-        axios
-          .post("http://localhost:80/signup", { username: refUsername.current.value, email: refEmail.current.value, password: refPassword.current.value })
-          .then((data) => {
-            swal.fire({
-              title: `Welcome ${userInfo.username}`,
-              text: `Confirm mail has been sent to ${userInfo.email}`,
-              icon: "success",
-              confirmButtonText: "Let's go sign in",
+    const emailRegexp = /^[a-zA-Z0-9.!#$%&'*+\/=?^_`{|}~-]+@[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?(?:\.[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?)*$/;
+
+    // 모든 항목이 채워진 경우
+    if (refUsername.current.value && refEmail.current.value && refPassword.current.value) {
+      // 이메일이 올바른 경우
+      if (emailRegexp.test(refEmail.current.value)) {
+        // 비밀번호가 일치하는 경우
+        if (refPassword.current.value === refPasswordCheck.current.value) {
+          console.log("회원가입 성공");
+          const userinfo = { username: refUsername.current.value, email: refEmail.current.value, password: refPassword.current.value };
+          setErrorMessage("");
+          axios
+            .post("http://localhost:80/signup", userinfo)
+            .then((data) => {
+              swal.fire({
+                title: "Success",
+                text: "Account successfully created.",
+                icon: "success",
+                confirmButtonText: "Let's go",
+              });
+              navigate("/signin");
+            })
+            .catch((err) => {
+              setErrorMessage("Account already exists.");
             });
-            window.location.href("http://localhost:3000/signin");
-          })
-          .catch((err) => console.log(err));
+        } else if (refPassword.current.value !== refPasswordCheck.current.value) {
+          // 비밀번호가 일치하지 않는 경우
+          setErrorMessage("Mismatched password.");
+        } else {
+          // 그 외 유효하지 않은 경우
+          setErrorMessage("Invalid data.");
+        }
       } else {
-        setErrorMessage("Invalid password. Check your password.");
+        // 이메일이 올바르지 않은 경우
+        setErrorMessage("Invalid email address.");
       }
+    } else {
+      // 모든 항목이 채워지지 않은 경우
+      setErrorMessage("Please fill in everything.");
     }
   };
   const refUsername = useRef("");
@@ -42,19 +60,20 @@ function SignUp() {
     <div className="flex justify-center items-center bg-gradient-to-r from-hibye-20 to-hibye-40 w-screen h-screen">
       <div className="flex w-1/2">
         {/* left side */}
-        <div className="flex flex-col justify-between w-2/3 bg-hibye-80 rounded-tl-xl rounded-bl-xl text-center p-12">
+        <div className="flex flex-col justify-between relative w-2/3 bg-hibye-signup bg-cover bg-center rounded-tl-xl rounded-bl-xl text-center p-12">
           {/* logo */}
-          <div className="">
+          <div className="z-50">
             <Link to="/" className="block text-hibye-10 text-3xl font-bold mb-2">
               HiBye
             </Link>
-            <span className="block text-hibye-60 text-base">Your love starts here.</span>
+            <span className="block text-hibye-10 text-base">Your love starts here.</span>
           </div>
           {/* text */}
-          <div className="">
+          <div className="z-50">
             <span className="block text-hibye-60 text-base">It's always better</span>
             <span className="block text-hibye-60 text-base">when we're together.</span>
           </div>
+          <div className="w-full h-full absolute top-0 left-0 rounded-tl-xl rounded-bl-xl bg-hibye-signup bg-cover bg-center"></div>
         </div>
         {/* right side */}
         <div className="flex justify-center items-center w-2/3 bg-hibye-10 rounded-tr-xl rounded-br-xl">
