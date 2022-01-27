@@ -1,6 +1,7 @@
 import swal from "sweetalert2";
 import { useRef, useState } from "react";
 import { Link } from "react-router-dom";
+import axios from "axios";
 function SignUp() {
   const onSignUp = () => {
     if (!refUsername.current.value || !refEmail.current.value || !refPassword.current.value) {
@@ -10,16 +11,18 @@ function SignUp() {
         const userInfo = { username: refUsername.current.value, email: refEmail.current.value, password: refPassword.current.value };
         setErrorMessage("");
         console.log(userInfo);
-        swal.fire({
-          title: `Welcome ${userInfo.username}`,
-          text: `Confirm mail has been sent to ${userInfo.email}`,
-          icon: "success",
-          confirmButtonText: "Let's go sign in",
-        });
-        refUsername.current.value = "";
-        refEmail.current.value = "";
-        refPassword.current.value = "";
-        refPasswordCheck.current.value = "";
+        axios
+          .post("http://localhost:80/signup", { username: refUsername.current.value, email: refEmail.current.value, password: refPassword.current.value })
+          .then((data) => {
+            swal.fire({
+              title: `Welcome ${userInfo.username}`,
+              text: `Confirm mail has been sent to ${userInfo.email}`,
+              icon: "success",
+              confirmButtonText: "Let's go sign in",
+            });
+            window.location.href("http://localhost:3000/signin");
+          })
+          .catch((err) => console.log(err));
       } else {
         setErrorMessage("Invalid password. Check your password.");
       }
@@ -45,7 +48,7 @@ function SignUp() {
             <Link to="/" className="block text-hibye-10 text-3xl font-bold mb-2">
               HiBye
             </Link>
-            <span className="block text-hibye-60 text-base">True love starts here.</span>
+            <span className="block text-hibye-60 text-base">Your love starts here.</span>
           </div>
           {/* text */}
           <div className="">

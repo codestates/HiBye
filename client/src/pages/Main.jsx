@@ -1,10 +1,34 @@
+import { useEffect } from "react";
+import { useState } from "react";
 import TopBtn from "../components/Button/TopBtn";
 import BoardCards from "../components/views/BoardCards";
 
 function Main() {
+  const [ScrollY, setScrollY] = useState(0);
+  const [isOverScrollY, setIsOverScrollY] = useState(false);
+
+  const handleShowButton = () => {
+    setScrollY(window.pageYOffset);
+    if (ScrollY > 100) {
+      setIsOverScrollY(true);
+    } else {
+      setIsOverScrollY(false);
+    }
+  };
+
+  useEffect(() => {
+    const watch = () => {
+      window.addEventListener("scroll", handleShowButton);
+    };
+    watch();
+    return () => {
+      window.removeEventListener("scroll", handleShowButton);
+    };
+  });
   return (
     <div className="bg-hibye-10">
-      <TopBtn />
+      {isOverScrollY ? <TopBtn /> : null}
+      {/* <TopBtn /> */}
       {/* banner */}
       <section className="w-screen h-fit bg-gradient-to-r from-hibye-60 to-hibye-80 pt-12">
         <div className="inner text-7xl uppercase text-hibye-20 font-light">
