@@ -33,13 +33,6 @@ function SignIn() {
         })
         .then((data) => {
           dispatch(setUserInfo(data.data.data));
-          swal.fire({
-            title: "Success!",
-            text: "Success!",
-            icon: "success",
-            confirmButtonText: "Got it",
-            confirmButtonColor: "#D70569",
-          });
           navigate("/");
         })
         .catch((err) => {
