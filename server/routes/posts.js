@@ -35,7 +35,7 @@ router.get("/:board_id", async function (req, res) {
     // console.log(postList)
     res.status(200).json({
       data: postList,
-      lastpage: 10, // #To-Do 라스트페이지 수정필요
+      lastPage: 10, // #To-Do 라스트페이지 수정필요
       message: "ok",
     });
   } else {
@@ -68,7 +68,7 @@ router.get("/:board_id", async function (req, res) {
     // console.log(postList)
     res.status(200).json({
       data: postList,
-      lastpage: 10, // #To-Do 라스트페이지 수정필요
+      lastPage: 10, // #To-Do 라스트페이지 수정필요
       message: "ok",
     });
   }
