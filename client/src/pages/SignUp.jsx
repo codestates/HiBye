@@ -1,8 +1,9 @@
 import swal from "sweetalert2";
 import { useRef, useState } from "react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import axios from "axios";
 function SignUp() {
+  const navigate = useNavigate();
   const onSignUp = () => {
     if (!refUsername.current.value || !refEmail.current.value || !refPassword.current.value) {
       setErrorMessage("Please enter all informations.");
@@ -20,7 +21,7 @@ function SignUp() {
               icon: "success",
               confirmButtonText: "Let's go sign in",
             });
-            window.location.href("http://localhost:3000/signin");
+            navigate("/signin");
           })
           .catch((err) => console.log(err));
       } else {
