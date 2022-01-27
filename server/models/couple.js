@@ -1,7 +1,5 @@
-'use strict';
-const {
-  Model
-} = require('sequelize');
+"use strict";
+const { Model } = require("sequelize");
 module.exports = (sequelize, DataTypes) => {
   class Couple extends Model {
     /**
@@ -12,26 +10,29 @@ module.exports = (sequelize, DataTypes) => {
     static associate(models) {
       // define association here
       models.Couple.hasMany(models.User, {
-        foreignKey: 'couple_id',
-        onDelete: 'cascade',
-      })
+        foreignKey: "couple_id",
+        onDelete: "set null",
+      });
     }
   }
-  Couple.init({
-    is_matching: DataTypes.BOOLEAN,
-    started_at: DataTypes.DATE,
-    sender_id: {
-      type: DataTypes.INTEGER,
-      allowNull: true
+  Couple.init(
+    {
+      is_matching: DataTypes.BOOLEAN,
+      started_at: DataTypes.DATE,
+      sender_id: {
+        type: DataTypes.INTEGER,
+        allowNull: true,
+      },
+      receiver_id: {
+        type: DataTypes.INTEGER,
+        allowNull: true,
+      },
     },
-    receiver_id: {
-      type: DataTypes.INTEGER,
-      allowNull: true
-    }
-  }, {
-    sequelize,
-    underscored: true,
-    modelName: 'Couple',
-  });
+    {
+      sequelize,
+      underscored: true,
+      modelName: "Couple",
+    },
+  );
   return Couple;
 };
