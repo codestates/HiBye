@@ -21,6 +21,9 @@ module.exports = {
           10: "#EFEFEF",
         },
       },
+      spacing: {
+        "640px": "640px",
+      },
     },
   },
   plugins: [],
