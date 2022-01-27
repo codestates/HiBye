@@ -1,8 +1,6 @@
 import "../index.css";
 
 export function TodolistItem({ todoItem, deleteTodo }) {
-  //console.log(todoList);
-  //console.log(todoItem);
   const onChangeCheckbox = () => {
     // const newTodoList = todoList.map((item) => ({
     //   ...item,

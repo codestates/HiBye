@@ -9,7 +9,6 @@ export function Todolist({ todoList, deleteTodo }) {
       {todoList.map((todoItem) => {
         // 삭제한 항목일 경우, 출력하지 않음 (deleted가 true일때) -> axios.delete 연결안돼서 still exists in database
         // if (todoItem.deleted) return null;
-        // console.log(todoItem);
         return <TodolistItem key={todoItem.id} todoItem={todoItem} deleteTodo={deleteTodo} />;
       })}
     </div>

@@ -3,7 +3,6 @@ import { useNavigate } from "react-router-dom";
 export default function BoardCard({ board }) {
   const navigate = useNavigate();
   const handleClick = () => {
-    console.log(board.id, board.category);
     navigate(`/${board.category}/${board.id}`);
   };
   return (

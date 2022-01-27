@@ -15,8 +15,31 @@ import axios from "axios";
 import CancelBtn from "../components/Button/CancelBtn";
 import { useInView } from "react-intersection-observer";
 import useBoardCheck from "../utils/useBoardCheck";
+import TopBtn from "../components/Button/TopBtn";
 
 export default function ChatBoard() {
+  const [ScrollY, setScrollY] = useState(0);
+  const [isOverScrollY, setIsOverScrollY] = useState(false);
+
+  const handleShowButton = () => {
+    setScrollY(window.pageYOffset);
+    if (ScrollY > 100) {
+      setIsOverScrollY(true);
+    } else {
+      setIsOverScrollY(false);
+    }
+  };
+
+  useEffect(() => {
+    const watch = () => {
+      window.addEventListener("scroll", handleShowButton);
+    };
+    watch();
+    return () => {
+      window.removeEventListener("scroll", handleShowButton);
+    };
+  });
+
   const dispatch = useDispatch();
 
   // Params로 경로 확인
@@ -190,6 +213,7 @@ export default function ChatBoard() {
         )
       ) : (
         <div className="bg-hibye-10">
+          {isOverScrollY ? <TopBtn /> : null}
           <PrivateBoardEditModal board_id={board.id} prev_name={board.name} prev_desc={board.desc} />
           <div className="inner pt-4">
             <div className="mt-10 p-5">
