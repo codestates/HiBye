@@ -6,9 +6,17 @@ const Op = sequelize.Op;
 require("dotenv").config();
 
 router.get("/:board_id", async function (req, res) {
+  const boardId = req.params.board_id;
   const searchValue = req.query.search;
   let pageNum = req.query.page;
   let offset = 0;
+  let limit = 10;
+  let count = await models.Post.count({
+    where: {
+      board_id: boardId,
+    },
+  });
+  lastpage = parseInt(count / limit);
 
   if (pageNum > 1) {
     offset = 10 * (pageNum - 1);
@@ -16,13 +24,13 @@ router.get("/:board_id", async function (req, res) {
 
   console.log("검색 값은 여기 있소 : ", searchValue);
   if (!searchValue) {
-    const boardId = req.params.board_id;
     const postList = await models.Post.findAll({
       offset: offset,
-      limit: 10,
+      limit: limit,
       where: {
         board_id: boardId,
       },
+      order: [["updated_at", "DESC"]],
       include: [
         {
           model: models.User,
@@ -32,18 +40,21 @@ router.get("/:board_id", async function (req, res) {
       ],
     });
 
-    // console.log(postList)
+    postList.map((data, index) => {
+      console.log(data.dataValues);
+      data.dataValues.rowNum = count - (index + offset);
+    });
+
     res.status(200).json({
       data: postList,
-      lastPage: 10, // #To-Do 라스트페이지 수정필요
+      lastpage: lastpage,
       message: "ok",
     });
   } else {
     // console.log(searchValue)
-    const boardId = req.params.board_id;
     const postList = await models.Post.findAll({
       offset: offset,
-      limit: 10,
+      limit: limit,
       where: {
         [Op.and]: [
           {
@@ -63,12 +74,17 @@ router.get("/:board_id", async function (req, res) {
           attributes: ["username"],
         },
       ],
+      order: [["updated_at", "DESC"]],
     });
 
-    // console.log(postList)
+    postList.map((data, index) => {
+      console.log(data.dataValues);
+      data.dataValues.rowNum = count - (index + offset);
+    });
+
     res.status(200).json({
       data: postList,
-      lastPage: 10, // #To-Do 라스트페이지 수정필요
+      lastpage: lastpage,
       message: "ok",
     });
   }
