@@ -7,9 +7,17 @@ import PrivateBoardCreateModal from "./PrivateBoardCreateModal";
 import { useSelector, useDispatch } from "react-redux";
 import { getPublicBoards } from "../../redux/modules/publicBoards";
 import { getPrivateBoards } from "../../redux/modules/privateBoards";
-import { removeUserInfo } from "../../redux/modules/user";
+import { removeUserInfo, setUserInfo } from "../../redux/modules/user";
 
 export default function Header() {
+  useEffect(() => {
+    if (localStorage.getItem("userLocalInfo") !== null) {
+      const userlocal = localStorage.getItem("userLocalInfo");
+      const data = JSON.parse(userlocal);
+      dispatch(setUserInfo(data));
+    }
+  });
+
   // 유저정보 호출
   const { id, couple_id, is_matching, started_at } = useSelector((state) => state.user);
 
@@ -46,6 +54,7 @@ export default function Header() {
   // SignOut
   const signOut = () => {
     dispatch(removeUserInfo());
+    localStorage.clear();
     window.location.reload();
   };
 

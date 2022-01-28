@@ -33,6 +33,8 @@ function SignIn() {
         })
         .then((data) => {
           dispatch(setUserInfo(data.data.data));
+          const userLocalInfo = JSON.stringify(data.data.data);
+          localStorage.setItem("userLocalInfo", userLocalInfo);
           navigate("/");
         })
         .catch((err) => {
