@@ -1,6 +1,9 @@
 # HiBye
 
+<br />
+
 ![image](https://user-images.githubusercontent.com/84524514/150492381-51587ac1-b54f-43ba-a279-c1ead47a6e21.png)
+
 
 사랑에 대해 얘기해 봐요,
 
@@ -12,7 +15,11 @@
 
 즐겁기도 슬프기도 한 여러분들의 이야기를 모두 함께 공유해봐요 Hi Bye :)
 
-# 우리가 사용한 스택을 나열해 보았어요 :>
+<br />
+<br />
+
+# 🤖 우리가 사용한 스택을 나열해 보았어요  :>
+<br />
 
 ## FRONT
 
@@ -22,23 +29,30 @@
 <img src="https://img.shields.io/badge/Tailwind-06B6D4?style=for-the-badge&logo=Tailwind CSS&logoColor=white"/>
 <img src="https://img.shields.io/badge/Figma-F24E1E?style=for-the-badge&logo=Figma&logoColor=white"/>
 <img src="https://img.shields.io/badge/Redux-764ABC?style=for-the-badge&logo=Redux&logoColor=white"/>
+<img src="https://img.shields.io/badge/Axios-2480E6?style=for-the-badge&logo=A-Frame&logoColor=white"/>
+<img src="https://img.shields.io/badge/Swiper-6332F6?style=for-the-badge&logo=Swiper&logoColor=white"/>
+<img src="https://img.shields.io/badge/sweetalert2-9999FF?style=for-the-badge&logo=Transport for London&logoColor=white"/>
 
-- 악시오스
-- 스와이퍼
-- 스윗얼럴2
+<br />
 
 ## BACK
 
-- 노드제이에스
-- 익스프레스
-- 시퀄라이즈
+<img src="https://img.shields.io/badge/Node.js-339933?style=for-the-badge&logo=Node.js&logoColor=white"/>
+<img src="https://img.shields.io/badge/express.js-000000?style=for-the-badge&logo=express&logoColor=white"/>
+<img src="https://img.shields.io/badge/Sequelize-52B0E7?style=for-the-badge&logo=Sequelize&logoColor=white"/>
 <img src="https://img.shields.io/badge/MySQL-4479A1?style=for-the-badge&logo=MySQL&logoColor=white"/>
-- aws s3,ec2,rds
+<img src="https://img.shields.io/badge/Amazon EC2-232F3E?style=for-the-badge&logo=Amazon AWS&logoColor=white"/>
+<img src="https://img.shields.io/badge/Amazon RDS-4053D6?style=for-the-badge&logo=Amazon AWS&logoColor=white"/>
+<img src="https://img.shields.io/badge/Amazon S3-569A31?style=for-the-badge&logo=Amazon S3&logoColor=white"/>
 
 ![hibye-final-cloudcraft](https://user-images.githubusercontent.com/25292654/151467028-68889d8e-fea3-462a-96bc-091cd152652d.png)
 
+<br />
+
 
 # 👋 우리 팀을 소개합니다
+
+<br />
 
 <p align="left">
 <img src="https://user-images.githubusercontent.com/75408145/151467902-d751e7c0-dfe0-41d2-b176-425704490f81.png">
@@ -46,28 +60,39 @@
   
 # 김수빈
 - Position : Front
-- [github](https://github.com/ParkSangBong)
+- [GitHub](https://github.com/strawberryoolongtea)
   
-<p align="right">
+<br />
+  
+<p align="left">
 <img src="https://user-images.githubusercontent.com/75408145/151467949-e1f0306e-df80-4273-bb1d-9f971e78b02a.png">
+
+  
   
 # 정유찬
 - Position : Front
-- [github](https://github.com/ParkSangBong)
-
+- [GitHub](https://github.com/YuchanJeong)
+  
+<br />
+  
 <p align="left">
 <img src="https://user-images.githubusercontent.com/75408145/151467971-a8accc5d-991d-4bd9-b0b8-1def663c691b.png">
 
-# 송지효
+# 김강희나
 - Position : Front
-- [github](https://github.com/ParkSangBong)
+- [GitHub](https://github.com/jenjenhub)
   
-<p align="right">
+<br /> 
+  
+<p align="left">
 <img src="https://user-images.githubusercontent.com/75408145/151467867-77c913d6-5f9e-4505-b9ea-04ced30b3f6d.png">
 
 # 박상봉 - 프로젝트 리더
   
 - Position : Back
-- [github](https://github.com/ParkSangBong)
+- [GitHub](https://github.com/ParkSangBong)
   
-## #자세한 부분들은 프로젝트의 WiKi를 참고 해주세요 :)
+<br />
+  
+  
+### ❗️ 자세한 부분들은 프로젝트의 WiKi를 참고 해주세요 :)
