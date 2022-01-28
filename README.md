@@ -16,12 +16,13 @@
 
 ## FRONT
 
-<img src="https://img.shields.io/badge/React-61DAFB?style=for-the-badge&logo=JavaScript&logoColor=navy"/>
-- 씨에스에스
+<img src="https://img.shields.io/badge/React-61DAFB?style=for-the-badge&logo=React&logoColor=black"/>
+<img src="https://img.shields.io/badge/CSS-1572B6?style=for-the-badge&logo=CSS3&logoColor=white"/>
 <img src="https://img.shields.io/badge/JavaScript-F7DF1E?style=for-the-badge&logo=JavaScript&logoColor=black"/> 
-- 테일 윈드
-<img src="https://img.shields.io/badge/Figma-F24E1E?style=for-the-badge&logo=JavaScript&logoColor=white"/>
-- 리덕스
+<img src="https://img.shields.io/badge/Tailwind-06B6D4?style=for-the-badge&logo=Tailwind CSS&logoColor=white"/>
+<img src="https://img.shields.io/badge/Figma-F24E1E?style=for-the-badge&logo=Figma&logoColor=white"/>
+<img src="https://img.shields.io/badge/Redux-764ABC?style=for-the-badge&logo=Redux&logoColor=white"/>
+
 - 악시오스
 - 스와이퍼
 - 스윗얼럴2
@@ -31,7 +32,7 @@
 - 노드제이에스
 - 익스프레스
 - 시퀄라이즈
-- 마이에스큐엘
+<img src="https://img.shields.io/badge/MySQL-4479A1?style=for-the-badge&logo=MySQL&logoColor=white"/>
 - aws s3,ec2,rds
 
 ![hibye-final-cloudcraft](https://user-images.githubusercontent.com/25292654/151467028-68889d8e-fea3-462a-96bc-091cd152652d.png)
