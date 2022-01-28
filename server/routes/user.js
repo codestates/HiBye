@@ -55,41 +55,26 @@ router.get("/:user_id", async function (req, res) {
 
 router.patch("/:user_id", (req, res) => {
   const userId = req.params.user_id;
-  const { username, password } = req.body;
+  const { username } = req.body;
 
-  bcrypt.genSalt(10, (err, salt) => {
-    if (err) {
-      console.log("salt error: ", err);
-      return res.status(500).json({ message: "salt error" });
-    }
-
-    bcrypt.hash(password, salt, (err, hash) => {
-      if (err) {
-        console.log(err);
-        res.status(500).json({ message: "password error" });
-      } else {
-        models.User.update(
-          {
-            username: username,
-            password: hash,
-          },
-          {
-            where: {
-              id: userId,
-            },
-          },
-        )
-          .then((result) => {
-            console.log("수정 성공 : ", result);
-            res.status(201).json({ message: "유저 정보 수정 성공" });
-          })
-          .catch((error) => {
-            console.log("수정 실패 : ", error);
-            res.status(500).json({ message: "error" });
-          });
-      }
+  models.User.update(
+    {
+      username: username,
+    },
+    {
+      where: {
+        id: userId,
+      },
+    },
+  )
+    .then((result) => {
+      console.log("수정 성공 : ", result);
+      res.status(201).json({ message: "유저 정보 수정 성공" });
+    })
+    .catch((error) => {
+      console.log("수정 실패 : ", error);
+      res.status(500).json({ message: "error" });
     });
-  });
 
   // models.User.update({
   //   username: username,
