@@ -16,11 +16,11 @@
 
 ## FRONT
 
-- 리액트
+<img src="https://img.shields.io/badge/React-61DAFB?style=for-the-badge&logo=JavaScript&logoColor=navy"/>
 - 씨에스에스
 <img src="https://img.shields.io/badge/JavaScript-F7DF1E?style=for-the-badge&logo=JavaScript&logoColor=black"/> 
 - 테일 윈드
-- 피그마
+<img src="https://img.shields.io/badge/Figma-F24E1E?style=for-the-badge&logo=JavaScript&logoColor=white"/>
 - 리덕스
 - 악시오스
 - 스와이퍼
