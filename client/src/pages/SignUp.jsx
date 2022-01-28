@@ -16,7 +16,7 @@ function SignUp() {
           const userinfo = { username: refUsername.current.value, email: refEmail.current.value, password: refPassword.current.value };
           setErrorMessage("");
           axios
-            .post("http://localhost:80/signup", userinfo)
+            .post(`${process.env.REACT_APP_API_URL}/signup`, userinfo)
             .then((data) => {
               swal.fire({
                 title: "Success",

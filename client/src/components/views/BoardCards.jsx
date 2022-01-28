@@ -42,34 +42,4 @@ export default function BoardCards() {
       </Swiper>
     </>
   );
-
-  // new Swiper(".swiper-container", {
-  //   direction: "horizontal",
-  //   slidesPerView: 3,
-  //   spaceBetween: 10,
-  //   centeredSlides: true,
-  //   loop: true,
-  //   autoplay: {
-  //     delay: 500
-  //   },
-  //   pagination: {
-  //     el: ".swiper-pagination",
-  //     clickable: true,
-  //   },
-  // });
-  // return (
-  // <div className="flex justify-center items-center w-screen overflow-hidden">
-  //   <div className="flex w-fit p-10">
-  //     <LeftBtn />
-  //     <RightBtn />
-  // <div className="swiper-container">
-  // <div className="swiper-wrapper">
-  // {boards.map((board) => {
-  // return <BoardCard className="swiper-slide" board={board} />;
-  // })}
-  // </div>
-  // </div>
-  //   </div>
-  // </div>
-  // );
 }

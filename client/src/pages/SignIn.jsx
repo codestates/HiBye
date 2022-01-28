@@ -27,12 +27,14 @@ function SignIn() {
       setErrorMessage("Please enter your password.");
     } else if (refEmail.current.value && refPassword.current.value) {
       axios
-        .post("http://localhost:80/signin", {
+        .post(`${process.env.REACT_APP_API_URL}/signin`, {
           email: refEmail.current.value,
           password: refPassword.current.value,
         })
         .then((data) => {
           dispatch(setUserInfo(data.data.data));
+          const userLocalInfo = JSON.stringify(data.data.data);
+          localStorage.setItem("userLocalInfo", userLocalInfo);
           navigate("/");
         })
         .catch((err) => {

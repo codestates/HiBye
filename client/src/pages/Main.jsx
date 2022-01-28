@@ -35,9 +35,6 @@ function Main() {
   return (
     <div className="bg-hibye-10">
       {isOverScrollY ? <TopBtn /> : null}
-      {/* <TopBtn /> */}
-      {/* banner */}
-      {/* <section className="w-screen h-fit bg-gradient-to-r from-hibye-60 to-hibye-80 pt-12"> */}
       <section className="w-screen h-fit bg-hibye-banner bg-cover bg-center pt-12">
         <div className="inner text-7xl uppercase text-hibye-20 font-light">
           <span className="block">it is always better</span>
@@ -56,16 +53,9 @@ function Main() {
           <div className="text-hibye-20 font-bold">HiBye</div>
         </div>
       </section>
-      {/* boardCards */}
       <section>
         <BoardCards />
-        {/* <div className="mb-12 flex justify-center items-center">
-          <span className="block w-2 h-2 border-2 border-hibye-60 rounded-full mr-1 ml-1 bg-hibye-60"></span>
-          <span className="block w-2 h-2 border-2 border-hibye-60 rounded-full mr-1 ml-1"></span>
-          <span className="block w-2 h-2 border-2 border-hibye-60 rounded-full mr-1 ml-1"></span>
-        </div> */}
       </section>
-      {/* descriptions */}
       <section className="mt-32 mb-32">
         <div className="inner relative">
           <div>
@@ -111,7 +101,6 @@ function Main() {
           <div className="w-3/5 h-3/5 bg-hibye-main-2 bg-cover bg-center absolute top-32 left-0"></div>
         </div>
       </section>
-      {/* contact */}
       <section className="w-screen h-screen bg-hibye-10 flex justify-center items-center">
         <div className="w-72 font-light text-6xl text-center text-hibye-80">
           just say <span className="font-bold">Hi</span> and <span className="font-bold">Bye.</span>
