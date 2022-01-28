@@ -21,6 +21,23 @@
   @apply text-center px-6 text-lg  h-10 w-80 leading-10 rounded-lg bg-hibye-80 border text-hibye-10 hover:bg-hibye-100 hover:text-hibye-20 duration-300 cursor-pointer;
 }
 
+.swiper-pagination-bullet {
+  margin-top: 30px;
+  border: 2px solid #ff96af;
+  background: transparent;
+  opacity: 1;
+}
+.swiper-pagination-bullet-active {
+  background: #ff96af;
+}
+
 textarea {
   resize: none;
+}
+
+input[type="number"]::-webkit-outer-spin-button,
+input[type="number"]::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  appearance: none;
 }

@@ -11,11 +11,25 @@ module.exports = {
           40: "#FFAFD2", // hibye_rose
           20: "#FFEBF0", // hibye_blush
           10: "#FBFBFB", // hibye_snow
-          input: "#EFEFEF",
+        },
+        gray: {
+          100: "#333333",
+          80: "#666666",
+          60: "#999999",
+          40: "#CCCCCC",
+          20: "#E0E0E0",
+          10: "#EFEFEF",
         },
       },
-      backgroundImages: {
-        banner: "url(https://unsplash.com/photos/BcVvVvqiCGA)",
+      spacing: {
+        "640px": "640px"
+      },
+      backgroundImage: {
+        "hibye-banner": "url('../public/images/banner.jpg')",
+        "hibye-main-1-front": "url('../public/images/main-1-front.jpg')",
+        "hibye-main-1-back": "url('../public/images/main-1-back.jpg')",
+        "hibye-main-2": "url('../public/images/main-2.jpg')",
+        "hibye-signup": "url('../public/images/signup.jpg')",
       },
     },
   },
