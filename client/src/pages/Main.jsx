@@ -1,6 +1,5 @@
 import { useEffect } from "react";
 import { useState } from "react";
-import { useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import TopBtn from "../components/Button/TopBtn";
 import BoardCards from "../components/views/BoardCards";
@@ -28,9 +27,7 @@ function Main() {
     };
   });
 
-  const userInfo = useSelector((state) => state.user);
   const navigate = useNavigate();
-  console.log(userInfo);
   const handleBannerBtn = () => {
     navigate("/signup");
   };

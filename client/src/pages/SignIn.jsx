@@ -20,7 +20,6 @@ function SignIn() {
   const dispatch = useDispatch();
   const userInfo = useSelector((state) => state.user);
 
-  console.log(userInfo);
   const onSignIn = () => {
     if (!refEmail.current.value) {
       setErrorMessage("Please enter your email address.");
@@ -33,23 +32,16 @@ function SignIn() {
           password: refPassword.current.value,
         })
         .then((data) => {
-          console.log(data.data.data);
           dispatch(setUserInfo(data.data.data));
-          swal.fire({
-            title: "Success!",
-            text: "Success!",
-            icon: "success",
-            confirmButtonText: "Got it",
-          });
           navigate("/");
         })
         .catch((err) => {
-          console.log(err);
           swal.fire({
             title: "Error",
             text: `${err}`,
             icon: "error",
             confirmButtonText: "Try again",
+            confirmButtonColor: "#D70569",
           });
         });
     } else {
@@ -58,6 +50,7 @@ function SignIn() {
         text: `Unexpected errors ocurred`,
         icon: "error",
         confirmButtonText: "Try again",
+        confirmButtonColor: "#D70569",
       });
     }
   };

@@ -4,8 +4,31 @@ import { Todoinsert } from "./Todoinsert";
 import { Todolist } from "./Todolist";
 import axios from "axios";
 import { useParams } from "react-router-dom";
+import TopBtn from "../components/Button/TopBtn";
 
 function TodolistBoard() {
+  const [ScrollY, setScrollY] = useState(0);
+  const [isOverScrollY, setIsOverScrollY] = useState(false);
+
+  const handleShowButton = () => {
+    setScrollY(window.pageYOffset);
+    if (ScrollY > 100) {
+      setIsOverScrollY(true);
+    } else {
+      setIsOverScrollY(false);
+    }
+  };
+
+  useEffect(() => {
+    const watch = () => {
+      window.addEventListener("scroll", handleShowButton);
+    };
+    watch();
+    return () => {
+      window.removeEventListener("scroll", handleShowButton);
+    };
+  });
+
   const [todoList, setTodoList] = useState([{ id: "", contents: "", board_id: "", is_completed: "" }]);
   const [text, setText] = useState("");
 
@@ -20,11 +43,9 @@ function TodolistBoard() {
 
   //투두리스트 가져오는 get
   const getTodos = useCallback(() => {
-    console.log("hi");
     axios
       .get(`http://localhost:80/todos/${boardId}`)
       .then((res) => {
-        console.log(res.data.data);
         setTodoList(res.data.data);
       })
       .catch((err) => alert(err));
@@ -36,11 +57,10 @@ function TodolistBoard() {
 
   //Todoinsert.js의 onPressSubmitButton에서 적용
   const saveTodo = () => {
-    axios.post(`http://localhost:80/todo/${boardId}`, { contents: text }).then((res) => console.log(res));
+    axios.post(`http://localhost:80/todo/${boardId}`, { contents: text });
   };
 
   const deleteTodo = (id) => {
-    console.log(id);
     axios
       .delete(`http://localhost:80/todo/${id}`)
       .then((res) => {
@@ -72,6 +92,7 @@ function TodolistBoard() {
 
   return (
     <div className="bg-hibye-10">
+      {isOverScrollY ? <TopBtn /> : null}
       {/* 전체를 감싸는 컨테이너 */}
       <div className="inner h-fit bg-hibye-10 pt-12 pl-5 pb-12 pr-5">
         {/* boardname과 board desc */}

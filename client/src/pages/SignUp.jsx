@@ -5,7 +5,7 @@ import axios from "axios";
 function SignUp() {
   const navigate = useNavigate();
   const onSignUp = () => {
-    const emailRegexp = /^[a-zA-Z0-9.!#$%&'*+\/=?^_`{|}~-]+@[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?(?:\.[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?)*$/;
+    const emailRegexp = /^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?(?:\.[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?)*$/;
 
     // 모든 항목이 채워진 경우
     if (refUsername.current.value && refEmail.current.value && refPassword.current.value) {
@@ -13,7 +13,6 @@ function SignUp() {
       if (emailRegexp.test(refEmail.current.value)) {
         // 비밀번호가 일치하는 경우
         if (refPassword.current.value === refPasswordCheck.current.value) {
-          console.log("회원가입 성공");
           const userinfo = { username: refUsername.current.value, email: refEmail.current.value, password: refPassword.current.value };
           setErrorMessage("");
           axios
@@ -24,6 +23,7 @@ function SignUp() {
                 text: "Account successfully created.",
                 icon: "success",
                 confirmButtonText: "Let's go",
+                confirmButtonColor: "#D70569",
               });
               navigate("/signin");
             })
