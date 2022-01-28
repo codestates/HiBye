@@ -18,7 +18,7 @@
 
 - 리액트
 - 씨에스에스
-- 자바스크립트
+<img src="https://img.shields.io/badge/JavaScript-F7DF1E?style=for-the-badge&logo=JavaScript&logoColor=black"/> 
 - 테일 윈드
 - 피그마
 - 리덕스
