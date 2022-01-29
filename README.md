@@ -1,4 +1,4 @@
-# HiBye
+# [HiBye](http://hibye-bucket-deploy.s3-website.ap-northeast-2.amazonaws.com) - 클릭시 배포 된 사이트로 연결, 2022년 1월 29일 기준 데이터베이스 닫혀있습니다.
 
 <br />
 
